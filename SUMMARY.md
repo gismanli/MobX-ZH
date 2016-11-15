@@ -8,9 +8,9 @@
 * [API 概述](refguide/api.md)
     * [observable](refguide/observable.md)
     * [@observable](refguide/observable-decorator.md)
-    * [\(@\)computed](refguide/computed-decorator.md)
+    * [(@)computed](refguide/computed-decorator.md)
     * [autorun](refguide/autorun.md)
-    * [\(@\)observer](refguide/observer-component.md)
+    * [(@)observer](refguide/observer-component.md)
     * [action](refguide/action.md)
 * Observable 类型
     * [对象](refguide/object.md)
@@ -31,7 +31,7 @@
     * [创建（异步）actions](best/actions.md)
     * [优化 React 组件](best/react-performance.md)
     * [开发者工具](best/devtools.md)
-    * [ES5 \/ ES6 \/ TypeScript 语法](best/syntax.md)
+    * [ES5 / ES6 / TypeScript 语法](best/syntax.md)
     * [无状态组件和热加载](best/stateless-HMR.md)
 * 实用方法
     * [autorunAsync](refguide/autorun-async.md)
