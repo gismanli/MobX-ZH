@@ -7,9 +7,9 @@
 * [API 概述](refguide/api.md)
     * [observable](refguide/observable.md)
     * [@observable](refguide/observable-decorator.md)
-    * [(@)computed](refguide/computed-decorator.md)
+    * [\(@\)computed](refguide/computed-decorator.md)
     * [autorun](refguide/autorun.md)
-    * [(@)observer](refguide/observer-component.md)
+    * [\(@\)observer](refguide/observer-component.md)
     * [action](refguide/action.md)
 * Observable 类型
     * [对象](refguide/object.md)
@@ -18,7 +18,7 @@
     * [boxed values](refguide/boxed.md)
 * [理解MobX是如何响应的](best/react.md)
 * [如何（不）使用装饰符](best/decorators.md)
-* 资料
+* [资料](资料.md)
     * [教程，视频和博客](faq/blogs.md)
     * [相关项目](faq/related.md)
     * [示例项目](faq/examples.md)
@@ -30,7 +30,7 @@
     * [创建（异步）actions](best/actions.md)
     * [优化 React 组件](best/react-performance.md)
     * [开发者工具](best/devtools.md)
-    * [ES5 / ES6 / TypeScript 语法](best/syntax.md)
+    * [ES5 \/ ES6 \/ TypeScript 语法](best/syntax.md)
     * [无状态组件和热加载](best/stateless-HMR.md)
 * 实用方法
     * [autorunAsync](refguide/autorun-async.md)
