@@ -31,19 +31,19 @@ todos.shift();
 
 由于 ES5 中原生数组的限制（`array.observe`仅在 ES7 中可用, 并且数组无法扩展），`observable`将参数提供的数组进行克隆替代原始的那个。在实践中，这些数组工作的和原生的数组一样好，并且其支持所有原生方法，包括索引分配，up-to 和包括数组的长度。
 
+请记住无论如何`Array.isArray(observable([]))`都将返回`false`，所以当你需要传递一个可观察的数组给外部库时，最好使用`array.slice()` _创建一个其浅拷贝在传递给其它库或者内置函数_ 使用（这是最好的做法）。换句话说，`Array.isArray(observable([]).slice())`将会返回`true`。
 
-Bear in mind however that `Array.isArray(observable([]))` will yield `false`, so whenever you need to pass an observable array to an external library,
-it is a good idea to _create a shallow copy before passing it to other libraries or built-in functions_ (which is good practice anyway) by using `array.slice()`.
-In other words, `Array.isArray(observable([]).slice())` will yield `true`.
+和函数内置实现的`sort`和`reverse`不同，observableArray.sort 和 reverse 不会改变数组的结构, 只会返回一个 sorted / reversed 的克隆。
 
-Unlike the built-in implementation of the functions `sort` and `reverse`, observableArray.sort and reverse  will not change the array in-place, but only will return a sorted / reversed copy.
+除了所有的内置函数，下面的方法对可观察的数组来说也是非常有用的：
 
-Besides all built-in functions, the following goodies are available as well on observable arrays:
+* `intercept(interceptor)`，它可以作用于数组以拦截任何改变前的状态，具体请参阅[observe & intercept](observe.md) 
+* `observe(listener, fireImmediately? = false)`监听数组的改变。其回调会在数组拼接或数组变化时接收参数 ：(。它将返回一个处理函数以停止监听。
+* `clear()` 从数组中删除 
+* `replace(newItems)` 用一个新的条目替换数组中所有存在的条目。
+* `find(predicate: (item, index, array) => boolean, thisArg?), fromIndex?)` 
 
-* `intercept(interceptor)`. Can be used to intercept any change before it is applied to the array. See [observe & intercept](observe.md) 
-* `observe(listener, fireImmediately? = false)` Listen to changes in this array. The callback will receive arguments that express an array splice or array change, conforming to [ES7 proposal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/observe). It returns a disposer function to stop the listener.
-* `clear()` Remove all current entries from the array.
-* `replace(newItems)` Replaces all existing entries in the array with new ones.
+
 * `find(predicate: (item, index, array) => boolean, thisArg?, fromIndex?)` Basically the same as the ES7 `Array.find` proposal, except for the additional `fromIndex` parameter.
 * `remove(value)` Remove a single item by value from the array. Returns `true` if the item was found and removed.
 * `peek()` Returns an array with all the values which can safely be passed to other libraries, similar to `slice()`.
