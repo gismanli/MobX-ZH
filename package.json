@@ -4,7 +4,8 @@
   "description": "mobx 中文(zh)文档",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gitbook build --gitbook=2.5.0 && gulp deploy"
   },
   "repository": {
     "type": "git",
