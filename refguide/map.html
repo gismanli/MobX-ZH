@@ -1,0 +1,904 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>maps · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="boxed.html" />
+    
+    
+    <link rel="prev" href="array.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" >
+            
+                <span>
+            
+                    
+                    MobX 介绍
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    为什么使用MobX?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../intro/overview.html">
+            
+                <a href="../intro/overview.html">
+            
+                    
+                    MobX 要点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="../intro/concepts.html">
+            
+                <a href="../intro/concepts.html">
+            
+                    
+                    概念 & 原则
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="api.html">
+            
+                <a href="api.html">
+            
+                    
+                    API 概述
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="observable.html">
+            
+                <a href="observable.html">
+            
+                    
+                    observable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="observable-decorator.html">
+            
+                <a href="observable-decorator.html">
+            
+                    
+                    @observable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="computed-decorator.html">
+            
+                <a href="computed-decorator.html">
+            
+                    
+                    (@)computed
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="autorun.html">
+            
+                <a href="autorun.html">
+            
+                    
+                    autorun
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="observer-component.html">
+            
+                <a href="observer-component.html">
+            
+                    
+                    (@)observer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="action.html">
+            
+                <a href="action.html">
+            
+                    
+                    action
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Observable 类型
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="object.html">
+            
+                <a href="object.html">
+            
+                    
+                    对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="array.html">
+            
+                <a href="array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.3" data-path="map.html">
+            
+                <a href="map.html">
+            
+                    
+                    maps
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="boxed.html">
+            
+                <a href="boxed.html">
+            
+                    
+                    boxed values
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../best/react.html">
+            
+                <a href="../best/react.html">
+            
+                    
+                    理解MobX是如何响应的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../best/decorators.html">
+            
+                <a href="../best/decorators.html">
+            
+                    
+                    如何（不）使用装饰符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    资料
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../faq/blogs.html">
+            
+                <a href="../faq/blogs.html">
+            
+                    
+                    教程，视频和博客
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../faq/related.html">
+            
+                <a href="../faq/related.html">
+            
+                    
+                    相关项目
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../faq/examples.html">
+            
+                <a href="../faq/examples.html">
+            
+                    
+                    示例项目
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../faq/boilerplates.html">
+            
+                <a href="../faq/boilerplates.html">
+            
+                    
+                    样板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../faq/faq.html">
+            
+                <a href="../faq/faq.html">
+            
+                    
+                    常见问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    注意点 & 技巧
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../best/pitfalls.md">
+            
+                <span>
+            
+                    
+                    常见问题 & 最佳事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../best/store.md">
+            
+                <span>
+            
+                    
+                    定义 stores
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../best/actions.md">
+            
+                <span>
+            
+                    
+                    创建（异步）actions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../best/react-performance.md">
+            
+                <span>
+            
+                    
+                    优化 React 组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../best/devtools.md">
+            
+                <span>
+            
+                    
+                    开发者工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../best/syntax.md">
+            
+                <span>
+            
+                    
+                    ES5 \/ ES6 \/ TypeScript 语法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../best/stateless-HMR.md">
+            
+                <span>
+            
+                    
+                    无状态组件和热加载
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    实用方法
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="autorun-async.md">
+            
+                <span>
+            
+                    
+                    autorunAsync
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="extending.md">
+            
+                <span>
+            
+                    
+                    Atom & Reaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="create-transformer.md">
+            
+                <span>
+            
+                    
+                    createTransformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="expr.md">
+            
+                <span>
+            
+                    
+                    expr
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="extend-observable.md">
+            
+                <span>
+            
+                    
+                    extendObservable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="is-observable.md">
+            
+                <span>
+            
+                    
+                    isObservable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="modifiers.md">
+            
+                <span>
+            
+                    
+                    modifiers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="observe.md">
+            
+                <span>
+            
+                    
+                    intercept & observe
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="reaction.md">
+            
+                <span>
+            
+                    
+                    reaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="spy.md">
+            
+                <span>
+            
+                    
+                    spy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="tojson.md">
+            
+                <span>
+            
+                    
+                    toJS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="transaction.md">
+            
+                <span>
+            
+                    
+                    transaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="untracked.md">
+            
+                <span>
+            
+                    
+                    untracked
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="when.md">
+            
+                <span>
+            
+                    
+                    when
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../donating.md">
+            
+                <span>
+            
+                    
+                    Donate
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >maps</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="observable-maps">Observable Maps</h1>
+<p><code>observable(asMap(values?, modifier?))</code> (and <code>map(values?, modifier?)</code>) creates a dynamic keyed observable map.
+Observable maps are very useful if you don&apos;t want to react just to the change of a specific entry, but also to the addition or removal of entries.
+Optionally takes an object or entries array with initial values.
+Unlike ES6 maps, only strings are accepted as keys.
+The modifier param can be one of the MobX <a href="modifiers.md">modifiers</a>, such as <code>asReference</code>.</p>
+<p>The following methods are exposed according to the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" target="_blank">ES6 Map spec</a>:</p>
+<ul>
+<li><code>has(key)</code> Returns whether this map has an entry the provided key. Note that the presence of a key is an observable fact in itself.</li>
+<li><code>set(key, value)</code>. Sets the given <code>key</code> to <code>value</code>. The provided key will be added to the map if it didn&apos;t exist yet.</li>
+<li><code>delete(key)</code>. Deletes the given key and its value from the map.</li>
+<li><code>get(key)</code>. Returns the value at the given key (or <code>undefined</code>). Make sure that you guard <code>get</code> calls with <code>has</code>.</li>
+<li><code>keys()</code>. Returns all keys present in this map. The insertion order is preserved.</li>
+<li><code>values()</code>. Returns all values present in this map. Insertion order is preserved.</li>
+<li><code>entries()</code>. Returns an (insertion ordered) array that for each key/value pair in the map contains an array <code>[key, value]</code>.</li>
+<li><code>forEach(callback:(value, key, map) =&gt; void, thisArg?)</code>. Invokes the given callback for each key / value pair in the map.</li>
+<li><code>clear()</code>. Removes all entries from this map.</li>
+<li><code>size</code>. Returns the amount of entries in this map.</li>
+</ul>
+<p>The following functions are not in the ES6 spec but are available in MobX:</p>
+<ul>
+<li><p><code>toJS()</code>. Returns a shallow plain object representation of this map. (For a deep copy use <code>mobx.toJS(map)</code>).</p>
+</li>
+<li><p><code>intercept(interceptor)</code>. Registers an interceptor that will be triggered before any changes are applied to the map. See <a href="observe.md">observe &amp; intercept</a>. </p>
+</li>
+<li><code>observe(listener, fireImmediately?)</code>. Registers a listener that fires upon each change in this map, similarly to the events that are emitted for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/observe" target="_blank">Object.observe</a>. See <a href="observe.md">observe &amp; intercept</a> for more details.</li>
+<li><code>merge(object | map)</code>. Copies all entries from the provided object into this map.</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="array.html" class="navigation navigation-prev " aria-label="Previous page: 数组">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="boxed.html" class="navigation navigation-next " aria-label="Next page: boxed values">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"maps","level":"1.3.3","depth":2,"next":{"title":"boxed values","level":"1.3.4","depth":2,"path":"refguide/boxed.md","ref":"refguide/boxed.md","articles":[]},"previous":{"title":"数组","level":"1.3.2","depth":2,"path":"refguide/array.md","ref":"refguide/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"ignoreSpecialCharacters":false,"maxIndexSize":1000000},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"theme-default":{"showLevel":false,"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"ebook":"styles/ebook.css","epub":"styles/epub.css","mobi":"styles/mobi.css","pdf":"styles/pdf.css","print":"styles/print.css","website":"styles/website.css"}},"file":{"path":"refguide/map.md","mtime":"2016-11-15T02:31:36.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-11-15T02:54:10.860Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
