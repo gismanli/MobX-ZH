@@ -2,7 +2,6 @@
 
 * [MobX](README.md)
 * 介绍
-    * [为什么使用MobX?](MobX.md)
     * [MobX 要点](intro/overview.md)
     * [概念 & 原则](intro/concepts.md)
 * [API 概述](refguide/api.md)
