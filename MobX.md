@@ -48,7 +48,7 @@ _应用的状态是本源，其他的部分，都应该从本源派生._
 
 其中包括用户界面，数据序列化，服务器通信，等等等。
 
-<img alt="MobX unidirectional flow" src="docs/flow.png" align="center" />
+<img alt="MobX unidirectional flow" src="images/flow.png" align="center" />
 
 React + MobX 是一个非常强大的组合. React提供一个把应用程序的状态渲染成组件树的机制，MobX 提供存储和更新状态然后提供给 React 使用的机制。
 
