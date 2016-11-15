@@ -1,6 +1,5 @@
 {
     "plugins": [
-        "disqus",
         "baidu"
     ],
     "pluginsConfig": {
@@ -15,10 +14,6 @@
         },
         "baidu": {
             "token": "0e60686c12d4e8d648511070d598b4e8"
-        },
-        "disqus": {
-            "shortName": "mobx-zh",
-            "useIdentifier": true
         }
     }
 }
