@@ -1,2 +1,20 @@
 {
+    "plugins": [
+        "disqus",
+        "baidu"
+    ],
+    "pluginsConfig": {
+        "sharing": {
+            "facebook": false,
+            "twitter": false,
+            "google": true,
+            "weibo": true,
+            "instapaper": false,
+            "vk": false,
+            "all": "facebook,google,twitter,weibo,instapaper"
+        },
+        "baidu": {
+            "token": "0e60686c12d4e8d648511070d598b4e8"
+        }
+    }
 }
