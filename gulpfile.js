@@ -7,7 +7,7 @@ var ghPages = require('gulp-gh-pages');
 
 gulp.task('deploy', function () {
     require('child_process').exec('gitbook build');
-    gulp.src('_book/**/*.*')
+    return gulp.src('_book/**/*.*')
         .pipe(ghPages())
         .on("error", function(err){
             console.log(err);
