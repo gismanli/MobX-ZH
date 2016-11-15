@@ -24,7 +24,7 @@
     * [示例项目](faq/examples.md)
     * [样板](faq/boilerplates.md)
     * [常见问题](faq/faq.md)
-* 注意点 & 技巧
+* [注意点 & 技巧](注意点--技巧.md)
     * [常见问题 & 最佳事件](best/pitfalls.md)
     * [定义 stores](best/store.md)
     * [创建（异步）actions](best/actions.md)
@@ -47,5 +47,4 @@
     * [transaction](refguide/transaction.md)
     * [untracked](refguide/untracked.md)
     * [when](refguide/when.md)
-* [Donate](donating.md)
 
