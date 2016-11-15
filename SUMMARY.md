@@ -1,11 +1,13 @@
 # Summary
 
 * MobX 介绍
+
   * [为什么使用MobX?](MobX.md)
   * [MobX 要点](intro/overview.md)
   * [概念 & 原则](intro/concepts.md)
 
 * [API 概述](refguide/api.md)
+
   * [observable](refguide/observable.md)
   * [@observable](refguide/observable-decorator.md)
   * [(@)computed](refguide/computed-decorator.md)
@@ -14,14 +16,17 @@
   * [action](refguide/action.md)
 
 * Observable 类型
+
   * [对象](refguide/object.md)
   * [数组](refguide/array.md)
   * [maps](refguide/map.md)
   * [boxed values](refguide/boxed.md)
 
 * [理解MobX是如何响应的](best/react.md)
+
 * [如何（不）使用装饰符](best/decorators.md)
 * 资料
+
   * [教程，视频和博客](faq/blogs.md)
   * [相关项目](faq/related.md)
   * [示例项目](faq/examples.md)
@@ -29,15 +34,17 @@
   * [常见问题](faq/faq.md)
 
 * 注意点 & 技巧
+
   * [常见问题 & 最佳事件](best/pitfalls.md)
   * [定义 stores](best/store.md)
   * [创建（异步）actions](best/actions.md)
   * [优化 React 组件](best/react-performance.md)
   * [开发者工具](best/devtools.md)
-  * [ES5 \/ ES6 \/ TypeScript 语法](best/syntax.md)
+  * [ES5 / ES6 / TypeScript 语法](best/syntax.md)
   * [无状态组件和热加载](best/stateless-HMR.md)
 
 * 实用方法
+
   * [autorunAsync](refguide/autorun-async.md)
   * [Atom & Reaction](refguide/extending.md)
   * [createTransformer](refguide/create-transformer.md)
@@ -54,4 +61,5 @@
   * [when](refguide/when.md)
 
 * [Donate](donating.md)
+
 
