@@ -1,11 +1,11 @@
 {
     "plugins": [
-        "baidu",
+        "ba",
         "-lunr",
         "-search"
     ],
     "pluginsConfig": {
-        "baidu": {
+        "ba": {
             "token": "0e60686c12d4e8d648511070d598b4e8"
         }
     }
