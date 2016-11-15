@@ -1,50 +1,26 @@
 <img src="images/mobx.png" alt="logo" height="120" align="right" />
 
-
-
 # MobX
-
-
 
 _简单, 可扩展的状态管理库_
 
-
-
 [![Build Status](https://travis-ci.org/mobxjs/mobx.svg?branch=master)](https://travis-ci.org/mobxjs/mobx)
-
-
 
 [![Coverage Status](https://coveralls.io/repos/mobxjs/mobx/badge.svg?branch=master&service=github)](https://coveralls.io/github/mobxjs/mobx?branch=master)
 
-
-
 [![Join the chat at https://gitter.im/mobxjs/mobx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mobxjs/mobx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-
 
 ![npm install mobx](https://nodei.co/npm/mobx.png?downloadRank=true&downloads=true)
 
-
-
 * 安装: `npm install mobx --save`.结合React: `npm install mobx-react --save`. 启用 ESNext 装饰 (可选), 可见下文.
-
-
 
 * CDN: https://unpkg.com/mobx/lib/mobx.umd.js
 
-
-
 ## 入门
-
-
 
 * [十分钟入门 MobX + React](https://mobxjs.github.io/mobx/getting-started.html)
 
-
-
 * [官方文档和API概述](https://mobxjs.github.io/mobx/refguide/api.html)
-
-
 
 * 视频教程:
 
