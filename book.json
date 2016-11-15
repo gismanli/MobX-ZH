@@ -1,6 +1,6 @@
 {
     "plugins": [
-        "baidu"
+        "tongji"
     ],
     "pluginsConfig": {
         "sharing": {
@@ -12,7 +12,7 @@
             "vk": false,
             "all": "facebook,google,twitter,weibo,instapaper"
         },
-        "baidu": {
+        "tongji": {
             "token": "0e60686c12d4e8d648511070d598b4e8"
         }
     }
