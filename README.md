@@ -1,3 +1,5 @@
+<meta name="baidu_union_verify" content="a28e7f3201f9bcd6b02518d5d087db7b">
+
 <img src="docs/mobx.png" alt="logo" height="120" align="right" />
 
 
