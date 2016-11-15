@@ -1,6 +1,6 @@
 # Summary
 
-* [Mobx](README.md)
+* [Mobx](MobX.md)
 * MobX 介绍
     * [为什么使用MobX?](MobX.md)
     * [MobX 要点](intro/overview.md)
