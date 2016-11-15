@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.1" data-chapter-title="autorunAsync" data-filepath="refguide/autorun-async.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.1" data-chapter-title="autorunAsync" data-filepath="refguide/autorun-async.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -799,6 +792,23 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="autorunasync">autorunAsync</h1>
+<p><code>autorunAsync(action: () =&gt; void, minimumDelay?: number, scope?)</code></p>
+<p>Just like <code>autorun</code> except that the action won&apos;t be invoked synchronously but asynchronously after the minimum amount of milliseconds has passed.
+The <code>action</code> will be run and observed.
+However, instead of running the action immediately when the values it observes have changed, the <code>minimumDelay</code> will be awaited before re-execution the <code>action</code> again.</p>
+<p>If observed values are changed multiple times while waiting, the action is still triggered only once, so in a sense it achieves a similar effect than a transaction.
+This might be useful for stuff that is expensive and doesn&apos;t need to happen synchronously; such as debouncing server communication.</p>
+<p>If a scope is given, the action will be bound to this scope object.</p>
+<p><code>autorunAsync(debugName: string, action: () =&gt; void, minimumDelay?: number, scope?)</code></p>
+<p>If a string is passed as first argument to <code>autorunAsync</code>, it will be used as debug name.</p>
+<p><code>autorunAsync</code> returns a disposer to cancel the autorun.</p>
+<pre><code class="lang-javascript">autorunAsync(() =&gt; {
+    <span class="hljs-comment">// Assuming that profile.asJson returns an observable Json representation of profile,</span>
+    <span class="hljs-comment">// send it to the server each time it is changed, but await at least 300 milliseconds before sending it.</span>
+    <span class="hljs-comment">// When sent, the latest value of profile.asJson will be used.</span>
+    sendProfileToServer(profile.asJson);
+}, <span class="hljs-number">300</span>);
+</code></pre>
 
                     
                     </section>

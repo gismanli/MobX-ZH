@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="7.7" data-chapter-title="无状态组件和热加载" data-filepath="best/stateless-HMR.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="7.7" data-chapter-title="无状态组件和热加载" data-filepath="best/stateless-HMR.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,54 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="&#x65E0;&#x72B6;&#x6001;&#x7EC4;&#x4EF6;&#x548C;&#x70ED;&#x52A0;&#x8F7D;">&#x65E0;&#x72B6;&#x6001;&#x7EC4;&#x4EF6;&#x548C;&#x70ED;&#x52A0;&#x8F7D;</h1>
+                        <h1 id="hot-module-reloading-with-stateless-components">Hot Module Reloading with Stateless Components</h1>
+<p>One thing that can be a challenge when getting started with MobX (and React in general) is understanding why Hot Module Reloading (HMR) sometimes breaks. When you initially get it working, it seems like magic (and it kind of is), however there&apos;s at least one rough edge with regard to HMR and React: stateless components. Since stateless components don&apos;t explicitly identify themselves as React components, HMR doesn&apos;t quite know what to do with them, and so you&apos;ll often see warnings in your console like this:</p>
+<pre><code>[HMR] The following modules couldn&apos;t be hot updated: (Full reload needed)
+This is usually because the modules which have changed (and their parents) do not know how to hot reload themselves. See http://webpack.github.io/docs/hot-module-replacement-with-webpack.html for more details.
+[HMR]  - ./src/ToDoItem.jsx
+</code></pre><p>This is especially apparent when you start working with MobX since observables make it really easy to create a lot of stateless components. Here are some tips for how to build your stateless components and still get all the advantages of HMR:</p>
+<h2 id="use-function-declarations-instead-of-arrow-functions">Use function declarations instead of arrow functions</h2>
+<p>Function declarations still do the exact same thing as arrow functions, but they have the key advantage of actually having names inside of the React DevTools.</p>
+<p>For instance, here&apos;s a stateless component built with an arrow function:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> ToDoItem = observer(props =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{props.item}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>)</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ToDoItem;
+</code></pre>
+<p>And here&apos;s how that will appear in the React DevTools:</p>
+<p><img src="../images/devtools-noDisplayName.png" alt="devtools-noname"></p>
+<p>On the other hand, using a function declaration will allow you to build the same stateless component AND see it in the DevTools:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ToDoItem</span>(<span class="hljs-params">props</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{props.item}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+}
+
+export default observer(ToDoItem);
+</span></code></pre>
+<p>And now the component shows up correctly in the DevTools:</p>
+<p><img src="../images/devtools-withDisplayName.png" alt="devtools-withname"></p>
+<h2 id="make-sure-your-toplevel-component-is-a-stateful-observer">Make sure your top-level component is a stateful observer</h2>
+<p>By &quot;stateful observer&quot;, all I really mean is a component created with <code>React.Component</code> or <code>React.createClass</code> and which uses the <code>@observer</code> decorator, like so:</p>
+<pre><code class="lang-javascript">import { observer } from &apos;mobx-react&apos;;
+
+@observer
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.store = props.store;
+  }
+
+  render() {
+    return (
+      &lt;div className=&quot;container&quot;&gt;
+        &lt;h2&gt;Todos:&lt;/h2&gt;
+        {
+          this.store.todos.map((t, idx) =&gt; &lt;ToDoItem key={idx} item={t}/&gt;)
+        }
+      &lt;/div&gt;
+    );
+  }
+}
+</code></pre>
+<p>In this case, <code>ToDoItem</code> is stateless, but will still work with HMR because the root-level of the UI tree is a stateful observer. As a result, whenever we change <strong>any</strong> stateless component, it will be hot-reloaded because the observers will trigger computations in the root-level component as well. And since the root-level component is a good old-fashioned React component, it&apos;ll trigger the HMR for all of its children and voila! All the magic of stateless components, observables, and hot module reloading working together beautifully.</p>
 
                     
                     </section>
@@ -809,7 +849,7 @@
         </div>
 
         
-        <a href="../best/syntax.html" class="navigation navigation-prev " aria-label="Previous page: ES5 / ES6 / TypeScript 语法"><i class="fa fa-angle-left"></i></a>
+        <a href="../best/syntax.html" class="navigation navigation-prev " aria-label="Previous page: ES5 \/ ES6 \/ TypeScript 语法"><i class="fa fa-angle-left"></i></a>
         
         
         <a href="../refguide/autorun-async.html" class="navigation navigation-next " aria-label="Next page: autorunAsync"><i class="fa fa-angle-right"></i></a>

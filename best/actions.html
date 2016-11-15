@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="7.3" data-chapter-title="创建（异步）actions" data-filepath="best/actions.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="7.3" data-chapter-title="创建（异步）actions" data-filepath="best/actions.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,44 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="&#x521B;&#x5EFA;&#xFF08;&#x5F02;&#x6B65;&#xFF09;actions">&#x521B;&#x5EFA;&#xFF08;&#x5F02;&#x6B65;&#xFF09;actions</h1>
+                        <h1 id="writing-actions">Writing Actions</h1>
+<p>Writing actions is straight-forward when using MobX.
+Just create, change or delete data and MobX will make sure that changes are picked up by the store and the components that depend on your data.
+Based on the store we have created in the previous section, actions become as simple as:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> todo = todoStore.createTodo();
+todo.task = <span class="hljs-string">&quot;make coffee&quot;</span>;
+</code></pre>
+<p>That is enough to create a todo, submit it to the server and update our user interface accordingly.</p>
+<h2 id="asynchronous-actions">Asynchronous actions</h2>
+<p>Writing asynchronous actions is pretty simple as well.
+You can use observable data structures as a promise.
+This is what happens with the <code>isLoading</code> property in the <code>todoStore</code> for example:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// ...</span>
+    <span class="hljs-keyword">this</span>.isLoading = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">this</span>.transportLayer.fetchTodos().then(fetchedTodos =&gt; {
+        fetchedTodos.forEach(json =&gt; <span class="hljs-keyword">this</span>.updateTodoFromServer(json));
+        <span class="hljs-keyword">this</span>.isLoading = <span class="hljs-literal">false</span>;
+    });
+<span class="hljs-comment">// ...</span>
+</code></pre>
+<p>After completing the asynchronous action, just update your data and your views will update.
+The render function of a React component could become as simple as:</p>
+<pre><code class="lang-javascript">import {observer} from &quot;mobx-react&quot;;
+
+var TodoOverview = observer(function(props) {
+    var todoStore = props.todoStore;
+    if (todoStore.isLoading) {
+        return &lt;div&gt;Loading...&lt;/div&gt;;
+    } else {
+        return &lt;div&gt;{
+            todoStore.todos.map(todo =&gt; &lt;TodoItem key={todo.id} todo={todo} /&gt;)
+        }&lt;/div&gt;
+    }
+});
+</code></pre>
+<p>The above <code>TodoOverview</code> component will now update whenever <code>isLoading</code> changes, or when <code>isLoading</code> is true and the <code>todos</code> list changes.
+Note that we could have expressed <code>todoStore.isLoading</code> as <code>todoStore.todos.length</code> as well.
+The result would be exactly the same.</p>
 
                     
                     </section>

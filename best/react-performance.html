@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="7.4" data-chapter-title="优化 React 组件" data-filepath="best/react-performance.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="7.4" data-chapter-title="优化 React 组件" data-filepath="best/react-performance.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,87 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="&#x4F18;&#x5316;-react-&#x7EC4;&#x4EF6;">&#x4F18;&#x5316; React &#x7EC4;&#x4EF6;</h1>
+                        <h1 id="optimizing-rendering-react-components">Optimizing rendering React components</h1>
+<p>MobX is very fast, <a href="https://twitter.com/mweststrate/status/718444275239882753" target="_blank">often even faster than Redux</a>. But here are some tips to get most out of React and MobX. Note that most tips apply to React in general and are not specific for MobX.</p>
+<h2 id="use-many-small-components">Use many small components</h2>
+<p><code>@observer</code> components will track all values they use and re-render if any of them changes.
+So the smaller your components are, the smaller the change they have to re-render; it means that more parts of your user interface have the possibility to render independently of each other.</p>
+<h2 id="render-lists-in-dedicated-components">Render lists in dedicated components</h2>
+<p>This is especially true when rendering big collections.
+React is notoriously bad at rendering large collections as the reconciler has to evaluate the components produced by a collection on each collection change.
+It is therefore recommended to have components that just map over a collection and render it, and render nothing else:</p>
+<p>Bad:</p>
+<pre><code class="lang-javascript">@observer class MyComponent extends Component {
+    render() {
+        const {todos, user} = this.props;
+        return (&lt;div&gt;
+            {user.name}
+            &lt;ul&gt;
+                {todos.map(todo =&gt; &lt;TodoView todo={todo} key={todo.id} /&gt;)}
+            &lt;/ul&gt;
+        &lt;/div&gt;)
+    }
+}
+</code></pre>
+<p>In the above listing React will unnecessarily need to reconcile all TodoView components when the <code>user.name</code> changes. They won&apos;t re-render, but the reconcile process is expensive in itself.</p>
+<p>Good:</p>
+<pre><code class="lang-javascript">@observer class MyComponent extends Component {
+    render() {
+        const {todos, user} = this.props;
+        return (&lt;div&gt;
+            {user.name}
+            &lt;TodosView todos={todos} /&gt;
+        &lt;/div&gt;)
+    }
+}
+
+@observer class TodosView extends Component {
+    render() {
+        const {todos} = this.props;
+        return &lt;ul&gt;
+            {todos.map(todo =&gt; &lt;TodoView todo={todo} key={todo.id} /&gt;)}
+        &lt;/ul&gt;)
+    }
+}
+</code></pre>
+<h2 id="dont-use-array-indexes-as-keys">Don&apos;t use array indexes as keys</h2>
+<p>Don&apos;t use array indexes or any value that might change in the future as key. Generate id&apos;s for your objects if needed.
+See also this <a href="https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318" target="_blank">blog</a>.</p>
+<h2 id="dereference-values-lately">Dereference values lately</h2>
+<p>When using <code>mobx-react</code> it is recommended to dereference values as late as possible.
+This is because MobX will re-render components that dereference observable values automatically.
+If this happens deeper in your component tree, less components have to re-render.</p>
+<p>Fast:</p>
+<p><code>&lt;DisplayName person={person} /&gt;</code></p>
+<p>Slower:</p>
+<p><code>&lt;DisplayName name={person.name} /&gt;</code>.</p>
+<p>There is nothing wrong to the latter.
+But a change in the <code>name</code> property will, in the first case, trigger the <code>DisplayName</code> to re-render, while in the latter, the owner of the component has to re-render.
+However, it is more important for your components to have a comprehensible API than applying this optimization.
+To have the best of both worlds, consider making smaller components:</p>
+<p><code>const PersonNameDisplayer = observer(({ props }) =&gt; &lt;DisplayName name={props.person.name} /&gt;)</code></p>
+<h2 id="bind-functions-early">Bind functions early</h2>
+<p>This tip applies to React in general and libraries using <code>PureRenderMixin</code> especially, try to avoid creating new closures in render methods.</p>
+<p>See also these resources:</p>
+<ul>
+<li><a href="https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#autobinding" target="_blank">Autobinding with property initializers</a></li>
+<li><a href="https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md" target="_blank">ESLint rule for no-bind</a></li>
+</ul>
+<p>Bad:</p>
+<pre><code class="lang-javascript">render() {
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">MyWidget</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{()</span> =&gt;</span> { alert(&apos;hi&apos;) }} /&gt;
+}
+</span></code></pre>
+<p>Good:</p>
+<pre><code class="lang-javascript">render() {
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">MyWidget</span> <span class="hljs-attribute">onClick</span>=<span class="hljs-value">{this.handleClick}</span> /&gt;</span>
+}
+
+handleClick = () =&gt; {
+    alert(&apos;hi&apos;)
+}
+</span></code></pre>
+<p>The bad example will always yield the <code>shouldComponent</code> of <code>PureRenderMixin</code> used in <code>MyWidget</code> to always yield false as you pass a new function each time the parent is re-rendered.</p>
 
                     
                     </section>

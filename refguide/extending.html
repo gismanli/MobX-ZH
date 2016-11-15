@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.2" data-chapter-title="Atom &amp; Reaction" data-filepath="refguide/extending.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.2" data-chapter-title="Atom &amp; Reaction" data-filepath="refguide/extending.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,104 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="atom--reaction">Atom &amp; Reaction</h1>
+                        <h1 id="creating-observable-data-structures-and-reactions">Creating observable data structures and reactions</h1>
+<h2 id="atoms">Atoms</h2>
+<p>At some point you might want to have more data structures or other things (like streams) that can be used in reactive computations.
+Achieving that is pretty simple by using the <code>Atom</code> class.
+Atoms can be used to signal MobX that some observable data source has been observed or changed.
+And MobX will signal the atom whenever it is used or no longer in use.</p>
+<p>The following example demonstrates how you can create an observable <code>Clock</code>, which can be used in reactive functions,
+and returns the current date-time.
+This clock will only actually tick if it is observed by someone.</p>
+<p>The complete API of the <code>Atom</code> class is demonstrated by this example.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> {Atom, autorun} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;mobx&quot;</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Clock</span> </span>{
+    atom;
+    intervalHandler = <span class="hljs-literal">null</span>;
+    currentDateTime;
+
+    constructor() {
+        <span class="hljs-comment">// creates an atom to interact with the MobX core algorithm</span>
+        <span class="hljs-keyword">this</span>.atom =    <span class="hljs-keyword">new</span> Atom(
+            <span class="hljs-comment">// first param: a name for this atom, for debugging purposes</span>
+            <span class="hljs-string">&quot;Clock&quot;</span>,
+            <span class="hljs-comment">// second (optional) parameter: callback for when this atom transitions from unobserved to observed.</span>
+            () =&gt; <span class="hljs-keyword">this</span>.startTicking(),
+            <span class="hljs-comment">// third (optional) parameter: callback for when this atom transitions from observed to unobserved</span>
+            <span class="hljs-comment">// note that the same atom transitions multiple times between these two states</span>
+            () =&gt; <span class="hljs-keyword">this</span>.stopTicking()
+        );
+    }
+
+    getTime() {
+        <span class="hljs-comment">// let MobX know this observable data source has been used</span>
+        <span class="hljs-comment">// reportObserved will return true if the atom is currenlty being observed</span>
+        <span class="hljs-comment">// by some reaction.</span>
+        <span class="hljs-comment">// reportObserved will alos trigger the onBecomeObserved event handler (startTicking) if needed</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.atom.reportObserved()) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.currentDateTime;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// apparantly getTime was called but not while a reaction is running.</span>
+            <span class="hljs-comment">// So, nobody depends on this value, hence the onBecomeObserved handler (startTicking) won&apos;t be fired</span>
+            <span class="hljs-comment">// Depending on the nature</span>
+            <span class="hljs-comment">// of your atom it might behave differently in such circumstances</span>
+            <span class="hljs-comment">// (like throwing an error, returning a default value etc)</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+        }
+    }
+
+    tick() {
+        <span class="hljs-keyword">this</span>.currentDateTime = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+        <span class="hljs-comment">// let MobX know that this data source has changed</span>
+        <span class="hljs-keyword">this</span>.atom.reportChanged();
+    }
+
+    startTicking() {
+        <span class="hljs-keyword">this</span>.tick(); <span class="hljs-comment">// initial tick</span>
+        <span class="hljs-keyword">this</span>.intervalHandler = setInterval(
+            () =&gt; <span class="hljs-keyword">this</span>.tick(),
+            <span class="hljs-number">1000</span>
+        );
+    }
+
+    stopTicking() {
+        clearInterval(<span class="hljs-keyword">this</span>.intervalHandler);
+        <span class="hljs-keyword">this</span>.intervalHandler = <span class="hljs-literal">null</span>;
+    }
+}
+
+<span class="hljs-keyword">const</span> clock = <span class="hljs-keyword">new</span> Clock();
+
+<span class="hljs-keyword">const</span> disposer = autorun(() =&gt; <span class="hljs-built_in">console</span>.log(clock.getTime()));
+
+<span class="hljs-comment">// ... prints the time each second</span>
+
+disposer();
+
+<span class="hljs-comment">// printing stops. If nobody else uses the same `clock` the clock will stop ticking as well.</span>
+</code></pre>
+<h2 id="reactions">Reactions</h2>
+<p><code>Reaction</code> allows you to create your own &apos;auto runner&apos;.
+Reactions track a function and signal when the function should be executed again because one or more dependencies have changed.</p>
+<p>This is how <code>autorun</code> is defined using <code>Reaction</code>:</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">autorun</span>(<span class="hljs-params">view: Lambda, scope?: <span class="hljs-built_in">any</span></span>) </span>{
+    <span class="hljs-keyword">if</span> (scope)
+        view = view.bind(scope);
+
+    <span class="hljs-keyword">const</span> reaction = <span class="hljs-keyword">new</span> Reaction(view.name || <span class="hljs-string">&quot;Autorun&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">this</span>.track(view);
+    });
+
+    <span class="hljs-comment">// Start or schedule the just created reaction</span>
+    <span class="hljs-keyword">if</span> (isComputingDerivation() || globalState.inTransaction &gt; <span class="hljs-number">0</span>)
+        globalState.pendingReactions.push(reaction);
+    <span class="hljs-keyword">else</span>
+        reaction.runReaction();
+
+    <span class="hljs-keyword">return</span> reaction.getDisposer();
+}
+</code></pre>
 
                     
                     </section>

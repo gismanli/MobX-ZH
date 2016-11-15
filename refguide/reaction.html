@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.9" data-chapter-title="reaction" data-filepath="refguide/reaction.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.9" data-chapter-title="reaction" data-filepath="refguide/reaction.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,63 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="reaction">reaction</h1>
+                        <h1 id="reaction">Reaction</h1>
+<p>Usage: <code>reaction(() =&gt; data, data =&gt; { sideEffect }, fireImmediately = false, delay = 0)</code>.</p>
+<p>A variation on <code>autorun</code> that gives more fine grained control on which observables will be tracked.
+It takes two functions, the first one is tracked and returns data that is used as input for the second one, the side effect.
+Unlike <code>autorun</code> the side effect won&apos;t be run directly when created, but only when the data expression returns a new value for the first time.
+Any observables that are accessed while executing the side effect will not be tracked.
+The side effect can be debounced, just like <code>autorunAsync</code>.
+<code>reaction</code> returns a disposer function.
+If a string is passed as first argument to <code>reaction</code>, it will be used as debug name.
+The functions passed to <code>when</code> will receive one argument when invoked, the current reaction, which can be used to dispose the when during execution.</p>
+<p>It is important to notice that the side effect will <em>only</em> react to data that was <em>accessed</em> in the data expression, which might be less then the data that is actually used in the effect.
+Also, the side effect will only be triggered when the data returned by the expression has changed (the <code>asStructure</code> modifier can be used to enforce deep comparison).
+In other words: reaction requires you to produce the things you need in your side effect.</p>
+<p>In the following example both <code>reaction1</code>, <code>reaction2</code> and <code>autorun1</code> will react to the addition, removal or replacement of todo&apos;s in the <code>todos</code> array.
+But only <code>reaction2</code> and <code>autorun</code> will react to the change of a <code>title</code> in one of the todo items, because <code>title</code> is used in the data expression of reaction 2, while it isn&apos;t in the data expression of reaction 1.
+<code>autorun</code> tracks the complete side effect, hence it will always trigger correctly, but is also more suspectible to accidentally accessing unrelevant data.
+See also <a href="../best/react">what will MobX React to?</a>.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> todos = observable([
+    {
+        title: <span class="hljs-string">&quot;Make coffee&quot;</span>,
+        done: <span class="hljs-literal">true</span>,
+    },
+    {
+        title: <span class="hljs-string">&quot;Find biscuit&quot;</span>,
+        done: <span class="hljs-literal">false</span>
+    }
+]);
+
+<span class="hljs-comment">// wrong use of reaction: reacts to length changes, but not to title changes!</span>
+<span class="hljs-keyword">const</span> reaction1 = reaction(
+    () =&gt; todos.length,
+    length =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;reaction 1:&quot;</span>, todos.map(todo =&gt; todo.title).join(<span class="hljs-string">&quot;, &quot;</span>))
+);
+
+<span class="hljs-comment">// correct use of reaction: reacts to length and title changes</span>
+<span class="hljs-keyword">const</span> reaction2 = reaction(
+    () =&gt; todos.map(todo =&gt; todo.title),
+    titles =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;reaction 2:&quot;</span>, titles.join(<span class="hljs-string">&quot;, &quot;</span>))
+);
+
+<span class="hljs-comment">// autorun reacts to just everything that is used in it&apos;s function</span>
+<span class="hljs-keyword">const</span> autorun1 = autorun(
+    () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;autorun 1:&quot;</span>, todos.map(todo =&gt; todo.title).join(<span class="hljs-string">&quot;, &quot;</span>))
+);
+
+todos.push({ title: <span class="hljs-string">&quot;explain reactions&quot;</span>, done: <span class="hljs-literal">false</span> });
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// reaction 1: Make coffee, find biscuit, explain reactions</span>
+<span class="hljs-comment">// reaction 2: Make coffee, find biscuit, explain reactions</span>
+<span class="hljs-comment">// autorun 1: Make coffee, find biscuit, explain reactions</span>
+
+todos[<span class="hljs-number">0</span>].title = <span class="hljs-string">&quot;Make tea&quot;</span>
+<span class="hljs-comment">// prints:</span>
+<span class="hljs-comment">// reaction 2: Make tea, find biscuit, explain reactions</span>
+<span class="hljs-comment">// autorun 1: Make tea, find biscuit, explain reactions</span>
+</code></pre>
+<p>Reaction is roughly speaking sugar for: <code>computed(expression).observe(action(sideEffect))</code> or <code>autorun(() =&gt; action(sideEffect)(expression)</code></p>
 
                     
                     </section>

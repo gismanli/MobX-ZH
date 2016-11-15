@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.13" data-chapter-title="untracked" data-filepath="refguide/untracked.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.13" data-chapter-title="untracked" data-filepath="refguide/untracked.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,32 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="untracked">untracked</h1>
+                        <h1 id="untracked">Untracked</h1>
+<p>Untracked allows you to run a piece of code without establishing observers.
+Like <code>transaction</code>, <code>untracked</code> is automatically applied by <code>(@)action</code>, so usually it makes more sense to use actions then <code>untracked</code> directly.
+Example:</p>
+<pre><code class="lang-javascript">
+<span class="hljs-keyword">const</span> person = observable({
+    firstName: <span class="hljs-string">&quot;Michel&quot;</span>,
+    lastName: <span class="hljs-string">&quot;Weststrate&quot;</span>
+});
+
+autorun(() =&gt; {
+    <span class="hljs-built_in">console</span>.log(
+        person.lastName,
+        <span class="hljs-string">&quot;,&quot;</span>,
+        <span class="hljs-comment">// this untracked block will return the person&apos;s firstName without establishing a dependency</span>
+        untracked(() =&gt; person.firstName)
+    );
+});
+<span class="hljs-comment">// prints: Weststrate, Michel</span>
+
+person.firstName = <span class="hljs-string">&quot;G.K.&quot;</span>;
+<span class="hljs-comment">// doesn&apos;t print!</span>
+
+person.lastName = <span class="hljs-string">&quot;Chesterton&quot;</span>;
+<span class="hljs-comment">// prints: Chesterton, G.K.</span>
+</code></pre>
 
                     
                     </section>

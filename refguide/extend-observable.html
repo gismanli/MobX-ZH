@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.5" data-chapter-title="extendObservable" data-filepath="refguide/extend-observable.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.5" data-chapter-title="extendObservable" data-filepath="refguide/extend-observable.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -799,6 +792,25 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="extendobservable">extendObservable</h1>
+<p>Quite similar to <code>Object.assign</code>, <code>extendObservable</code> takes two or more arguments, a <code>target</code> object and one or more <code>properties</code> maps.
+It adds all key-value pairs from the properties to the <code>target</code> as observable properties.</p>
+<p>If an argumentless function is passed as value of a property, <code>extendObservable</code> will introduce a <a href="computed-decorator.html"><code>computed</code></a> property instead of an observable property.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> Person = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">firstName, lastName</span>) </span>{
+    <span class="hljs-comment">// initialize observable properties on a new instance</span>
+    extendObservable(<span class="hljs-keyword">this</span>, {
+        firstName: firstName,
+        lastName: lastName
+    });
+}
+
+<span class="hljs-keyword">var</span> matthew = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;Matthew&quot;</span>, <span class="hljs-string">&quot;Henry&quot;</span>);
+
+<span class="hljs-comment">// add a observable property to an already observable object</span>
+extendObservable(matthew, {
+    age: <span class="hljs-number">353</span>
+});
+</code></pre>
+<p>(N.b:  <code>observable(object)</code> is actually an alias for <code>extendObservable(object, object)</code>)</p>
 
                     
                     </section>

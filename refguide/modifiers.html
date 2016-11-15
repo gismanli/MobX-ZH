@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.7" data-chapter-title="modifiers" data-filepath="refguide/modifiers.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.7" data-chapter-title="modifiers" data-filepath="refguide/modifiers.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,113 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="modifiers">modifiers</h1>
+                        <h1 id="modifiers-for-observable">Modifiers for observable</h1>
+<p>By default, <code>observable</code> recursively makes all the values of <em>plain</em> objects and arrays recursively observable.
+Besides that, it automatically converts functions without arguments into reactive views or derived properties.
+For all other types of values just a reference is stored.
+In general, this should just do what you need, but if you want you can override the default behavior using <em>modifiers</em>.
+Note that modifiers are &apos;sticky&apos;, they are interpreted as being annotations.
+They do not only apply to the current value, but also to all values that are assigned in the future to the same attribute.</p>
+<p>Note that the attributes class instances (all objects that have a prototype) will not be made observable automatically by <code>observable</code>.
+It is considered to be the responsibility of the class definition / constructor function to mark the necessary attributes of a class instance observable / computed.</p>
+<h2 id="computed">computed</h2>
+<p>Introduces a computed property, see <a href="http://mobxjs.github.io/mobx/refguide/computed-decorator.html" target="_blank"><code>computed</code></a></p>
+<h2 id="action">action</h2>
+<p>Marks a function as action, see <a href="http://mobxjs.github.io/mobx/refguide/action.html" target="_blank"><code>action</code></a></p>
+<h2 id="asmap">asMap</h2>
+<p>Creates a new Observable Map instead of an Observable Object. See <a href="map.html"><code>asMap</code></a></p>
+<h2 id="asreference">asReference</h2>
+<p>The most common modifier is <code>asReference</code>.
+If this modifier is used, <code>observable</code> will not attempt to make the value observable.
+Use this for example if you want to store a reference to a function, instead of creating a view based on that function.
+You can also use it to prevent that plain objects or arrays are made observable automatically.</p>
+<pre><code class="lang-javascript">
+<span class="hljs-keyword">var</span> test = observable({
+    x : <span class="hljs-number">3</span>,
+    doubler: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.x*<span class="hljs-number">2</span>;
+    },
+    someFunc: asReference(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.x;
+    })
+});
+
+<span class="hljs-built_in">console</span>.log(test.doubler); <span class="hljs-comment">// === 6</span>
+<span class="hljs-built_in">console</span>.log(test.someFunc); <span class="hljs-comment">// still a function</span>
+</code></pre>
+<h2 id="asstructure">asStructure</h2>
+<p>Can be used on non-cyclic, plain JavaScript values.
+Instead of comparing old values with new values based on whether the reference has changed, values are compared using deep equality before notifying any observers.
+This is useful if you are working with &apos;struct&apos; like objects like colors or coordinates and each time return fresh objects with possibly the same values.
+<code>asStructure</code> can be used on reactive functions, plain objects and arrays.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> ViewPort = mobxReact.observer(React.createClass({
+    displayName: <span class="hljs-string">&apos;ViewPort&apos;</span>,
+
+    componentWillMount: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        mobx.extendObservable(<span class="hljs-keyword">this</span>, {
+            screenSize: {
+                width: <span class="hljs-number">0</span>,
+                height: <span class="hljs-number">0</span>
+            },
+            minSize: {
+                width: <span class="hljs-number">400</span>,
+                height: <span class="hljs-number">300</span>
+            },
+            viewPortSize: mobx.asStructure(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">return</span> {
+                    width: <span class="hljs-built_in">Math</span>.max(<span class="hljs-keyword">this</span>.screenSize.width, <span class="hljs-keyword">this</span>.minSize.width),
+                    height: <span class="hljs-built_in">Math</span>.max(<span class="hljs-keyword">this</span>.screenSize.height, <span class="hljs-keyword">this</span>.minSize.height)
+                }
+            }
+        });
+
+        <span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            mobx.transaction(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">this</span>.screenSize.width = <span class="hljs-built_in">window</span>.innerWidth;
+                <span class="hljs-keyword">this</span>.screenSize.height = <span class="hljs-built_in">window</span>.innerHeight;
+            });
+        }.bind(<span class="hljs-keyword">this</span>);
+    },
+
+    render: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> (
+            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">{{</span>
+                <span class="hljs-attribute">width:</span> <span class="hljs-attribute">this.viewPortSize.width</span>,
+                <span class="hljs-attribute">height:</span> <span class="hljs-attribute">this.viewPortSize.height</span>
+            }}&gt;</span>
+                test
+            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        )</span>;
+    }
+}));
+</code></pre>
+<p>In the above example, the computed method <code>viewPortSize</code> returns a fresh object on each re-computation.
+So MobX considers it to have changed always. This means that each <code>resize</code> event of the browser will trigger a re-render of the
+<code>ViewPort</code> component.</p>
+<p>However, if the window size is smaller that the <code>minSize</code>, the resize doesn&apos;t need to influence the rendering anymore, as the computed
+will return the same dimensions after each run. <code>asStructure</code> signals to MobX that observers of this computation should only be triggered
+if the value returned by the computed has <em>structurally</em> changed (by default strict equality is used to determine whether observers need to be notified).
+This means that a new object that is returned from <code>viewPortSize</code> won&apos;t trigger a <code>render</code> if its contents are (structurally) the same as the previous value.</p>
+<p>To use the <code>asStructure</code> modifier in combination with the <code>@computed</code> decorator, use the following:</p>
+<pre><code class="lang-javascript">@computed({ asStructure: <span class="hljs-literal">true</span> }) get viewPortSize() {
+    <span class="hljs-keyword">return</span> {
+        width: <span class="hljs-built_in">Math</span>.max(<span class="hljs-keyword">this</span>.screenSize.width, <span class="hljs-keyword">this</span>.minSize.width),
+        height: <span class="hljs-built_in">Math</span>.max(<span class="hljs-keyword">this</span>.screenSize.height, <span class="hljs-keyword">this</span>.minSize.height)
+    }
+}
+</code></pre>
+<h2 id="asflat">asFlat</h2>
+<p>Similar to <code>asReference</code>, except that <code>asFlat</code> does not prevent its value from becoming observable, but only the children of the value.
+It can be used for example to create an observable array or object that should not automatically make its children observable.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> todos = observable(asFlat([{
+    title: <span class="hljs-string">&quot;make coffee&quot;</span>,
+    completed: <span class="hljs-literal">false</span>
+}]));
+
+isObservable(todos); <span class="hljs-comment">// true</span>
+isObservable(todos[<span class="hljs-number">0</span>]); <span class="hljs-comment">// false</span>
+isObservable(todos[<span class="hljs-number">0</span>], <span class="hljs-string">&quot;title&quot;</span>); <span class="hljs-comment">// false</span>
+</code></pre>
 
                     
                     </section>

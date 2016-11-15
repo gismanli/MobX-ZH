@@ -42,7 +42,7 @@
     <body>
         
         
-    <div class="book" data-level="8.14" data-chapter-title="when" data-filepath="refguide/when.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.14" data-chapter-title="when" data-filepath="refguide/when.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -168,7 +168,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -198,7 +198,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -327,7 +327,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -415,7 +415,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -507,7 +507,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -756,13 +756,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -797,6 +790,32 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="when">when</h1>
+<p><code>when(debugName?, predicate: () =&gt; boolean, effect: () =&gt; void, scope?)</code></p>
+<p><code>when</code> observes &amp; runs the given <code>predicate</code> until it returns true.
+Once that happens, the given <code>effect</code> is executed and the autorunner is disposed.
+The function returns a disposer to cancel the autorunner prematurely.</p>
+<p>This function is really useful to dispose or cancel stuff in a reactive way.
+For example:</p>
+<pre><code class="lang-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyResource</span> </span>{
+    constructor() {
+        when(
+            <span class="hljs-comment">// once...</span>
+            () =&gt; !<span class="hljs-keyword">this</span>.isVisible,
+            <span class="hljs-comment">// ... then</span>
+            () =&gt; <span class="hljs-keyword">this</span>.dispose()
+        );
+    }
+
+    @computed get isVisible() {
+        <span class="hljs-comment">// indicate whether this item is visible</span>
+    }
+
+    dispose() {
+        <span class="hljs-comment">// dispose</span>
+    }
+}
+</code></pre>
+<p><em>In MobX 1.0 this method was called <code>autorunUntil</code>.</em></p>
 
                     
                     </section>

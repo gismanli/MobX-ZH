@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.11" data-chapter-title="toJS" data-filepath="refguide/tojson.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.11" data-chapter-title="toJS" data-filepath="refguide/tojson.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -799,6 +792,22 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="tojs">toJS</h1>
+<p><code>toJS(value, supportCycles = true)</code></p>
+<p>Recursively converts an (observable) object to a javascript <em>structure</em>.
+Supports observable arrays, objects, maps and primitives.
+Computed values and other non-enumerable properties won&apos;t be part of the result.
+Cycles are detected and properly supported by default, but this can be disabled to improve performance.</p>
+<p>For more complex (de)serialization scenario&apos;s, one can use <a href="https://github.com/mobxjs/serializr" target="_blank">serializr</a></p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> obj = mobx.observable({
+    x: <span class="hljs-number">1</span>
+});
+
+<span class="hljs-keyword">var</span> clone = mobx.toJS(obj);
+
+<span class="hljs-built_in">console</span>.log(mobx.isObservableObject(obj)); <span class="hljs-comment">// true</span>
+<span class="hljs-built_in">console</span>.log(mobx.isObservableObject(clone)); <span class="hljs-comment">// false</span>
+</code></pre>
+<p>Note: this method was named <code>toJSON</code> before MobX 2.2</p>
 
                     
                     </section>

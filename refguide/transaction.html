@@ -44,7 +44,7 @@
     <body>
         
         
-    <div class="book" data-level="8.12" data-chapter-title="transaction" data-filepath="refguide/transaction.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:37:08 GMT+0800 (CST)">
+    <div class="book" data-level="8.12" data-chapter-title="transaction" data-filepath="refguide/transaction.md" data-basepath=".." data-revision="Tue Nov 15 2016 14:53:30 GMT+0800 (CST)">
     
 
 <div class="book-summary">
@@ -170,7 +170,7 @@
                         
                             <b>2.3.</b>
                         
-                        (@)computed
+                        \(@\)computed
                     </a>
             
             
@@ -200,7 +200,7 @@
                         
                             <b>2.5.</b>
                         
-                        (@)observer
+                        \(@\)observer
                     </a>
             
             
@@ -329,7 +329,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6" >
+        <li class="chapter " data-level="6" data-path="资料.html">
             
             <span><b>6.</b> 资料</span>
             
@@ -417,7 +417,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7" >
+        <li class="chapter " data-level="7" data-path="注意点--技巧.html">
             
             <span><b>7.</b> 注意点 &amp; 技巧</span>
             
@@ -509,7 +509,7 @@
                         
                             <b>7.6.</b>
                         
-                        ES5 / ES6 / TypeScript 语法
+                        ES5 \/ ES6 \/ TypeScript 语法
                     </a>
             
             
@@ -758,13 +758,6 @@
             
         </li>
     
-        <li class="chapter " data-level="9" data-path="donating.html">
-            
-            <span><b>9.</b> Donate</span>
-            
-            
-        </li>
-    
 
 
             
@@ -798,7 +791,29 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="transaction">transaction</h1>
+                        <h1 id="transaction">Transaction</h1>
+<p><code>transaction(worker: () =&gt; void)</code> can be used to batch a bunch of updates without notifying any observers until the end of the transaction.
+<code>transaction</code> takes a single, parameterless <code>worker</code> function as argument and runs it.
+No observers are notified until this function has completed.
+<code>transaction</code> returns any value that was returned by the <code>worker</code> function.
+Note that <code>transaction</code> runs completely synchronously.
+Transactions can be nested. Only after completing the outermost <code>transaction</code> pending reactions will be run.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> {observable, transaction, autorun} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;mobx&quot;</span>;
+
+<span class="hljs-keyword">const</span> numbers = observable([]);
+
+autorun(() =&gt; <span class="hljs-built_in">console</span>.log(numbers.length, <span class="hljs-string">&quot;numbers!&quot;</span>));
+<span class="hljs-comment">// Prints: &apos;0 numbers!&apos;</span>
+
+transaction(() =&gt; {
+    transaction(() =&gt; {
+        numbers.push(<span class="hljs-number">1</span>);
+        numbers.push(<span class="hljs-number">2</span>);
+    });
+    numbers.push(<span class="hljs-number">3</span>);
+});
+<span class="hljs-comment">// Prints: &apos;3 numbers!&apos;</span>
+</code></pre>
 
                     
                     </section>
