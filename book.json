@@ -1,6 +1,8 @@
 {
     "plugins": [
-        "baidu"
+        "baidu",
+        "-lunr",
+        "-search"
     ],
     "pluginsConfig": {
         "baidu": {
