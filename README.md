@@ -36,43 +36,23 @@ _简单, 可扩展的状态管理库_
 
  * LearnCode.academy MobX tutorial [Part I: MobX + React is AWESOME (7m)](https://www.youtube.com/watch?v=_q50BXqkAfI) [Part II: Computed Values and Nested/Referenced Observables (12m.)](https://www.youtube.com/watch?v=nYvNqKrl69s)
 
-
-
  * [Screencast: MobX 简介](https://www.youtube.com/watch?v=K8dr8BMU7-8) - 8m
-
-
 
  * [Talk: State Management Is Easy, React Amsterdam 2016 conf](https://www.youtube.com/watch?v=ApmSsu3qnf0&feature=youtu.be) ([slides](https://speakerdeck.com/mweststrate/state-management-is-easy-introduction-to-mobx))
 
-
-
 * [项目实战样例](http://mobxjs.github.io/mobx/faq/boilerplates.html)
-
-
 
 * 更多教程，博客和视频可以访问 [MobX 主页](http://mobxjs.github.io/mobx/faq/blogs.html)
 
-
-
 ## 概述
-
-
 
 MobX是一个通过函数式响应编程使得状态管理更简单，扩展性更强的库。
 
-
-
 其实MobX的背后理念是非常简单的:
-
-
 
 _应用的状态是本源，其他的部分，都应该从本源派生._
 
-
-
 其中包括用户界面，数据序列化，服务器通信，等等等。
-
-
 
 <img alt="MobX unidirectional flow" src="images/flow.png" align="center" />
 
