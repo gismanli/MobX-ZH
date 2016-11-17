@@ -1,22 +1,16 @@
 ## Primitive values and references
 
-All primitive values in JavaScript are immutable and hence per definition not observable.
-Usually that is fine, as MobX usually can just make the _property_ that contains the value observable.
-See also [observable objects](object.md).
-In rare cases it can be convenient to have an observable "primitive" that is not owned by an object.
-For these cases it is possible to create an observable box that manages such a primitive.
+JavaScript中的所有元数据都是不可变的，因此根据此定义这些是不可被观察的。通常来说这没问题，因为MobX通常只是把包含值的的_属性_变成可被观察的，详见[observable objects](object.md)。在特殊情况下，它可以方便的使一个不是对象拥有的"元"数据可被观察。对于这些情况，我们可以创建一个可被观察的box去管理，比如观察一个元数据。
 
-So `observable` accepts scalar values as well and returns an object with a getter / setter function that holds this value.
-Furthermore you can register a callback using its `.observe` method to listen to changes on the stored value.
-But in most cases it is better to use [`mobx.autorun`](autorun.md) instead.
+所以`observable`也接收标量值，并返回一个含有一个 getter / setter 方法的对象去保存此值。此外，你可以使用`.observe`方法给存储的值注册一个回调去监听其值变化时，但是在多数情况下使用[`mobx.autorun`](autorun.md)替代。
 
-So the signature of object returned by `observable(scalar)` is:
-* `.get()` Returns the current value.
-* `.set(value)` Replaces the currently stored value. Notifies all observers.
-* `intercept(interceptor)`. Can be used to intercept changes before they are applied. See [observe & intercept](observe.md)
-* `.observe(callback: (newValue, previousValue) => void, fireImmediately = false): disposerFunction`. Registers an observer function that will fire each time the stored value is replaced. Returns a function to cancel the observer. See [observe & intercept](observe.md)
+所以`observable(scalar)`返回的对象签名是：
+* `.get()` 返回当前值
+* `.set(value)` 替换当前存储的值，并通知所有的观察者。
+* `intercept(interceptor)` 可以在应用之前拦截更改，参阅[observe & intercept](observe.md)
+* `.observe(callback: (newValue, previousValue) => void, fireImmediately = false): disposerFunction` 注册一个存储的值每次替换时都会触发的观察者函数，其返回一个函数以取消该观察。请参阅[observe & intercept](observe.md)
 
-Example:
+例子:
 
 ```javascript
 import {observable} from "mobx";
@@ -34,7 +28,7 @@ cityName.set("Amsterdam");
 // prints 'Vienna -> Amsterdam'
 ```
 
-Array Example:
+数组 例子:
 
 ```javascript
 import {observable} from "mobx";
@@ -68,4 +62,4 @@ cityName.splice(0, 1);
 // prints 'Amsterdam removed'
 ```
 
-Similar to `observable`, `computed(function)` creates a boxed computed value. See [`computed`](http://mobxjs.github.io/mobx/refguide/computed-decorator.html)
+和 `observable`，`computed(function)` 创建一个boxed计算值相似，具体请参阅[`computed`](http://gismanli.github.io/MobX-ZH/refguide/computed-decorator.html)
