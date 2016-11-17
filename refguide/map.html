@@ -771,32 +771,25 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="observable-maps">Observable Maps</h1>
-<p><code>observable(asMap(values?, modifier?))</code> (and <code>map(values?, modifier?)</code>) creates a dynamic keyed observable map.
-Observable maps are very useful if you don&apos;t want to react just to the change of a specific entry, but also to the addition or removal of entries.
-Optionally takes an object or entries array with initial values.
-Unlike ES6 maps, only strings are accepted as keys.
-The modifier param can be one of the MobX <a href="modifiers.html">modifiers</a>, such as <code>asReference</code>.</p>
-<p>The following methods are exposed according to the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" target="_blank">ES6 Map spec</a>:</p>
+<p><code>observable(asMap(values?, modifier?))</code> &#xFF08;&#x548C;<code>map(values?, modifier?)</code>&#xFF09;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5177;&#x6709;&#x52A8;&#x6001;&#x952E;&#x503C;&#x7684;&#x53EF;&#x89C2;&#x5BDF;&#x7684;Map&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E0D;&#x53EA;&#x662F;&#x60F3;&#x8981;&#x5BF9;&#x7279;&#x5B9A;&#x7684;&#x6761;&#x76EE;&#x66F4;&#x6539;&#x505A;&#x51FA;&#x54CD;&#x5E94;&#xFF0C;&#x800C;&#x4E14;&#x8FD8;&#x5305;&#x542B;&#x6DFB;&#x52A0;&#x548C;&#x5220;&#x9664;&#x6761;&#x76EE;&#x65F6;&#x53EF;&#x89C2;&#x5BDF;&#x7684;maps&#x662F;&#x975E;&#x5E38;&#x6709;&#x7528;&#x7684;&#x3002;&#x5F53;&#x7136;&#x4E86;&#xFF0C;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x7ED9;&#x5BF9;&#x8C61;&#x6216;&#x6570;&#x7EC4;&#x521D;&#x59CB;&#x503C;&#x3002;&#x548C; ES6 &#x7684;maps&#x4E0D;&#x540C;&#xFF0C;&#x5176;&#x53EA;&#x63A5;&#x53D7;&#x5B57;&#x7B26;&#x4E32;&#x4F5C;&#x4E3A;&#x952E;&#x3002;&#x8BE5;&#x4FEE;&#x9970;&#x7B26;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;MobX<a href="modifiers.html">&#x4FEE;&#x9970;&#x7B26;</a>&#x7684;&#x4E00;&#x79CD;&#xFF0C;&#x5C31;&#x50CF;<code>asReferce</code>&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x6839;&#x636E;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" target="_blank">ES6 Map</a>&#x89C4;&#x8303;&#x63D0;&#x4F9B;&#x7684;&#xFF1A;</p>
 <ul>
-<li><code>has(key)</code> Returns whether this map has an entry the provided key. Note that the presence of a key is an observable fact in itself.</li>
-<li><code>set(key, value)</code>. Sets the given <code>key</code> to <code>value</code>. The provided key will be added to the map if it didn&apos;t exist yet.</li>
-<li><code>delete(key)</code>. Deletes the given key and its value from the map.</li>
-<li><code>get(key)</code>. Returns the value at the given key (or <code>undefined</code>). Make sure that you guard <code>get</code> calls with <code>has</code>.</li>
-<li><code>keys()</code>. Returns all keys present in this map. The insertion order is preserved.</li>
-<li><code>values()</code>. Returns all values present in this map. Insertion order is preserved.</li>
-<li><code>entries()</code>. Returns an (insertion ordered) array that for each key/value pair in the map contains an array <code>[key, value]</code>.</li>
-<li><code>forEach(callback:(value, key, map) =&gt; void, thisArg?)</code>. Invokes the given callback for each key / value pair in the map.</li>
-<li><code>clear()</code>. Removes all entries from this map.</li>
-<li><code>size</code>. Returns the amount of entries in this map.</li>
+<li><code>has(key)</code> &#x8FD4;&#x56DE;&#x8FD9;&#x4E2A;map&#x662F;&#x5426;&#x542B;&#x6709;&#x63D0;&#x4F9B;&#x7684;key&#x3002;&#x8981;&#x6CE8;&#x610F;key&#x672C;&#x8EAB;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x53EF;&#x88AB;&#x89C2;&#x5BDF;&#x7684;&#x3002;</li>
+<li><code>set(key, value)</code> &#x8BBE;&#x7F6E;&#x63D0;&#x4F9B;&#x7684;<code>key</code>&#x7684;&#x503C;&#x3002;&#x5373;&#x4F7F;&#x63D0;&#x4F9B;&#x7684;key&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x5176;&#x5728;map&#x4E2D;&#x4F1A;&#x88AB;&#x6DFB;&#x52A0;&#x3002;</li>
+<li><code>delete(key)</code> &#x5728;map&#x4E2D;&#x5220;&#x9664;&#x63D0;&#x4F9B;&#x7684;key&#x503C;</li>
+<li><code>get(key)</code> &#x8FD4;&#x56DE;&#x63D0;&#x4F9B;&#x7684;key&#x7684;&#x503C;(&#x53EF;&#x80FD;&#x4E3A;<code>undefined</code>)&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>has</code>&#x786E;&#x8BA4;&#x4F60;&#x662F;&#x5426;&#x53EF;&#x4EE5;&#x8C03;&#x7528;<code>get</code>&#x3002;</li>
+<li><code>keys()</code> &#x8FD4;&#x56DE;map&#x4E2D;&#x7684;&#x6240;&#x6709;key&#xFF0C;&#x63D2;&#x5165;&#x7684;&#x987A;&#x5E8F;&#x4E5F;&#x662F;&#x88AB;&#x4FDD;&#x7559;&#x7684;&#x3002;</li>
+<li><code>entries()</code> &#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x5BF9;&#x4E8E;map&#x4E2D;&#x6BCF;&#x4E2A;&#x952E;/&#x503C;&#x5BF9;&#x7684;&#x6620;&#x5C04;&#x6570;&#x7EC4;<code>[key, value]</code>(&#x6709;&#x63D2;&#x5165;&#x987A;&#x5E8F;)&#x7684;&#x6570;&#x7EC4;&#x3002;</li>
+<li><code>forEach(callback: (value, key, map) =&gt; void, thisArg?)</code>&#x3002;&#x5BF9;map&#x4E2D;&#x7684;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x952E;/&#x503C;&#x5BF9;&#x8FDB;&#x884C;&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x3002;</li>
+<li><code>clear()</code> &#x79FB;&#x9664;map&#x4E2D;&#x6240;&#x6709;&#x6761;&#x76EE;&#x3002;</li>
+<li><code>size</code> &#x8FD4;&#x56DE;map&#x4E2D;&#x7684;&#x6761;&#x76EE;&#x6570;&#x91CF;&#x3002;</li>
 </ul>
-<p>The following functions are not in the ES6 spec but are available in MobX:</p>
+<p>&#x4E0B;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x4E0D;&#x662F; ES6 &#x652F;&#x6301;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5728;MobX&#x4E2D;&#x662F;&#x975E;&#x5E38;&#x6709;&#x7528;&#x7684;&#xFF1A;</p>
 <ul>
-<li><p><code>toJS()</code>. Returns a shallow plain object representation of this map. (For a deep copy use <code>mobx.toJS(map)</code>).</p>
-</li>
-<li><p><code>intercept(interceptor)</code>. Registers an interceptor that will be triggered before any changes are applied to the map. See <a href="observe.html">observe &amp; intercept</a>. </p>
-</li>
-<li><code>observe(listener, fireImmediately?)</code>. Registers a listener that fires upon each change in this map, similarly to the events that are emitted for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/observe" target="_blank">Object.observe</a>. See <a href="observe.html">observe &amp; intercept</a> for more details.</li>
-<li><code>merge(object | map)</code>. Copies all entries from the provided object into this map.</li>
+<li><code>toJS()</code> &#x8FD4;&#x56DE;&#x8BE5;map&#x7684;&#x4E00;&#x4E2A;&#x6D45;&#x62F7;&#x8D1D;&#x7B80;&#x5355;&#x5BF9;&#x8C61;(&#x5BF9;&#x4E8E;&#x6DF1;&#x62F7;&#x8D1D;&#x8BF7;&#x4F7F;&#x7528;`mobx.toJS(map))&#x3002;</li>
+<li><code>intercept(interceptor)</code> &#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x5728;&#x5E94;&#x7528;&#x4E8E;map&#x4E2D;&#x4EFB;&#x4F55;&#x6539;&#x53D8;&#x4E4B;&#x524D;&#x4F1A;&#x88AB;&#x89E6;&#x53D1;&#x7684;&#x62E6;&#x622A;&#x5668;&#x3002;&#x8BF7;&#x53C2;&#x9605;<a href="observe.html">observe &amp; intercept</a>&#x3002;</li>
+<li><code>observe(listener, fireImmdidately)</code> &#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x5F53;map&#x4E2D;&#x4EFB;&#x4F55;&#x6539;&#x53D8;&#x65F6;&#x88AB;&#x89E6;&#x53D1;&#x7684;&#x76D1;&#x542C;&#x8005;&#xFF0C;&#x7C7B;&#x4F3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/observe" target="_blank">Object.observe</a>&#x7684;&#x53D1;&#x5C04;&#x4E8B;&#x4EF6;&#x3002;&#x8BE6;&#x60C5;&#x8BF7;&#x53C2;&#x9605;<a href="observe.html">observe &amp; intercept</a>&#x3002;</li>
+<li><code>merge(object | map)</code> &#x590D;&#x5236;&#x63D0;&#x4F9B;&#x7684;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6761;&#x76EE;&#x5230;&#x8FD9;&#x4E2A;map&#x4E2D;&#x3002;</li>
 </ul>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement('script');hm.src = '//hm.baidu.com/hm.js?0e60686c12d4e8d648511070d598b4e8';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(hm, s);})();</script>
                                 
@@ -825,7 +818,7 @@ The modifier param can be one of the MobX <a href="modifiers.html">modifiers</a>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"maps","level":"1.4.3","depth":2,"next":{"title":"boxed values","level":"1.4.4","depth":2,"path":"refguide/boxed.md","ref":"refguide/boxed.md","articles":[]},"previous":{"title":"数组","level":"1.4.2","depth":2,"path":"refguide/array.md","ref":"refguide/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"refguide/map.md","mtime":"2016-11-15T05:59:42.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-11-15T11:23:56.230Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"maps","level":"1.4.3","depth":2,"next":{"title":"boxed values","level":"1.4.4","depth":2,"path":"refguide/boxed.md","ref":"refguide/boxed.md","articles":[]},"previous":{"title":"数组","level":"1.4.2","depth":2,"path":"refguide/array.md","ref":"refguide/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"refguide/map.md","mtime":"2016-11-17T08:15:42.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-11-17T08:16:11.870Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
