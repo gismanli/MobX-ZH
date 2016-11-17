@@ -41,11 +41,6 @@ todos.shift();
 * `observe(listener, fireImmediately? = false)`监听数组的改变。其回调会在数组拼接或数组变化时接收参数 ：(。它将返回一个处理函数以停止监听。
 * `clear()` 从数组中删除 
 * `replace(newItems)` 用一个新的条目替换数组中所有存在的条目。
-* `find(predicate: (item, index, array) => boolean, thisArg?), fromIndex?)` 
-
-
-* `find(predicate: (item, index, array) => boolean, thisArg?, fromIndex?)` Basically the same as the ES7 `Array.find` proposal, except for the additional `fromIndex` parameter.
-* `remove(value)` Remove a single item by value from the array. Returns `true` if the item was found and removed.
-* `peek()` Returns an array with all the values which can safely be passed to other libraries, similar to `slice()`.
-In contrast to `slice`, `peek` doesn't create a defensive copy. Use this in performance critical applications if you know for sure that you use the array in a read-only manner.
-In performance critical sections it is recommended to use a flat observable array as well.
+* `find(predicate: (item, index, array) => boolean, thisArg?), fromIndex?)` 基本上和ES7的`Array.find`提议相同，除了附加的`fromIndex`。
+* `remove(value)`按值移除数组中的单条条目。如果找到它们并移除时将会返回`true`。
+* `peek()` 返回一个包含所有值的并可以安全的传递给其它库使用的数组，就像`slice()`一样。和`slice`不同，`peek`并不会创建一个新的副本。如果你确定要以只读方式使用数组，你可以在对对性能要求较高的应用中使用它。在性能关键部分，建议也使用可观察的数组。

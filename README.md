@@ -56,71 +56,33 @@ _应用的状态是本源，其他的部分，都应该从本源派生._
 
 <img alt="MobX unidirectional flow" src="images/flow.png" align="center" />
 
-
-
 React + MobX 是一个非常强大的组合. React提供一个把应用程序的状态渲染成组件树的机制，MobX 提供存储和更新状态然后提供给 React 使用的机制。
-
-
 
 React 和 MobX 都提供了一个开发过程中处理问题很理想和独特的的解决方案。React通过虚拟 DOM 减少 UI 渲染过程中 DOM 的操作次数已达到最佳的 UI 渲染。MobX通过一个虚拟的状态依赖图实现只更新 React 组件依赖的状态已达到最佳的的应用状态同步。
 
-
-
 ## 核心概念
-
-
 
 MobX只有几个核心的概念，可以通过下面的实例尝试使用它。[JSFiddle](https://jsfiddle.net/mweststrate/wv3yopo0/) (or [without ES6 and JSX](https://jsfiddle.net/rubyred/55oc981v/)).
 
-
-
 ### 可观察的状态
-
-
 
 MobX 可以直接在现有的数据结构如对象，数组和类实例添加 `observervable` 即可拥有可观察的能力。
 
-
-
 这些可以简单的通过 [@observable](http://mobxjs.github.io/mobx/refguide/observable-decorator.html) 标识 (ES.Next) 来实现。
 
-
-
 ```javascript
-
-
-
 class Todo {
-
-
-
  id = Math.random();
-
-
-
  @observable title = "";
-
-
-
  @observable finished = false;
-
-
-
 }
-
-
-
 ```
 
 
 
 使用 `observable` 就像是把对象的属性变成了电子表格单元格，
 
-
-
 但是并不同于电子表格的是，这些属性不仅仅只能是原始值，还可以是引用，对象和数组，
-
-
 
 你甚至可以[自定义](http://mobxjs.github.io/mobx/refguide/extending.html)可被观察的数据源.
 

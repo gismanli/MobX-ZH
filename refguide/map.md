@@ -1,27 +1,22 @@
 # Observable Maps
 
-`observable(asMap(values?, modifier?))` (and `map(values?, modifier?)`) creates a dynamic keyed observable map.
-Observable maps are very useful if you don't want to react just to the change of a specific entry, but also to the addition or removal of entries.
-Optionally takes an object or entries array with initial values.
-Unlike ES6 maps, only strings are accepted as keys.
-The modifier param can be one of the MobX [modifiers](modifiers.md), such as `asReference`.
+`observable(asMap(values?, modifier?))` （和`map(values?, modifier?)`）创建一个具有动态键值的可观察的Map。如果你不只是想要对特定的条目更改做出响应，而且还包含添加和删除条目时可观察的maps是非常有用的。当然了，你也可以给对象或数组初始值。和 ES6 的maps不同，其只接受字符串作为键。该修饰符可以作为MobX[修饰符](modifiers.md)的一种，就像`asReferce`。
 
-The following methods are exposed according to the [ES6 Map spec](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map):
+以下的方式是根据[ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)规范提供的：
 
-* `has(key)` Returns whether this map has an entry the provided key. Note that the presence of a key is an observable fact in itself.
-* `set(key, value)`. Sets the given `key` to `value`. The provided key will be added to the map if it didn't exist yet.
-* `delete(key)`. Deletes the given key and its value from the map.
-* `get(key)`. Returns the value at the given key (or `undefined`). Make sure that you guard `get` calls with `has`.
-* `keys()`. Returns all keys present in this map. The insertion order is preserved.
-* `values()`. Returns all values present in this map. Insertion order is preserved.
-* `entries()`. Returns an (insertion ordered) array that for each key/value pair in the map contains an array `[key, value]`.
-* `forEach(callback:(value, key, map) => void, thisArg?)`. Invokes the given callback for each key / value pair in the map.
-* `clear()`. Removes all entries from this map.
-* `size`. Returns the amount of entries in this map.
+* `has(key)` 返回这个map是否含有提供的key。要注意key本身实际上是可被观察的。
+* `set(key, value)` 设置提供的`key`的值。即使提供的key不存在，其在map中会被添加。
+* `delete(key)` 在map中删除提供的key值
+* `get(key)` 返回提供的key的值(可能为`undefined`)，可以通过`has`确认你是否可以调用`get`。
+* `keys()` 返回map中的所有key，插入的顺序也是被保留的。
+* `entries()` 返回一个包含对于map中每个键/值对的映射数组`[key, value]`(有插入顺序)的数组。
+* `forEach(callback: (value, key, map) => void, thisArg?)`。对map中的任何一个键/值对进行调用回调。
+* `clear()` 移除map中所有条目。
+* `size` 返回map中的条目数量。
 
-The following functions are not in the ES6 spec but are available in MobX:
-* `toJS()`. Returns a shallow plain object representation of this map. (For a deep copy use `mobx.toJS(map)`).
+下面的方法不是 ES6 支持的，但是在MobX中是非常有用的：
 
-* `intercept(interceptor)`. Registers an interceptor that will be triggered before any changes are applied to the map. See [observe & intercept](observe.md). 
-* `observe(listener, fireImmediately?)`. Registers a listener that fires upon each change in this map, similarly to the events that are emitted for [Object.observe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/observe). See [observe & intercept](observe.md) for more details.
-* `merge(object | map)`. Copies all entries from the provided object into this map.
+* `toJS()` 返回该map的一个浅拷贝简单对象(对于深拷贝请使用`mobx.toJS(map))。
+* `intercept(interceptor)` 注册一个在应用于map中任何改变之前会被触发的拦截器。请参阅[observe & intercept](observe.md)。
+* `observe(listener, fireImmdidately)` 注册一个当map中任何改变时被触发的监听者，类似[Object.observe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/observe)的发射事件。详情请参阅[observe & intercept](observe.md)。
+* `merge(object | map)` 复制提供的对象中的所有条目到这个map中。
