@@ -1,8 +1,10 @@
-# Creating observable data structures and reactions
+# 创建一个可被观察的数据结构和响应
 
 ## Atoms
 
-At some point you might want to have more data structures or other things (like streams) that can be used in reactive computations.
+在某些时候，你可能想要更多的数据结构或者其它可以在reactive计算时使用的东西(例如流)。使用类`Atom`实现这些是非常简单的，Atoms可用于通知MobX当某些被观察的数据结构发生
+
+
 Achieving that is pretty simple by using the `Atom` class.
 Atoms can be used to signal MobX that some observable data source has been observed or changed.
 And MobX will signal the atom whenever it is used or no longer in use.
