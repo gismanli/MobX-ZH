@@ -16,9 +16,9 @@ var appState = observable({
 
 ## 2. 创建响应状态变化的视图
 
-我们并没有让观测的`appState`去做任何事，你现在就可以创建视图，这些视图当`appState`中的数据变化时自动的更新。MobX会找一种最小变动的方法去更新你的视图。这个简单的效果会帮你节省一大堆没用的样板，并且它还是很[高效的](https://mendix.com/tech-blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/)
+我们并没有让观测的`appState`去做任何事，你现在就可以创建视图，当`appState`中的数据变化时这些视图会自动的更新。MobX会找一种最小变动的方法去更新你的视图。这个简单的处理会帮你节省一大堆没用的样板，并且它还是很[高效的](https://mendix.com/tech-blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/)
 
-一般来说任何方法都可以成为数据观测是的响应，并且MobX可以在任何的ES5环境下运行，但是这里列举一个试用ES6的语法写一个React组件
+一般来说任何function都可以成为数据观测时的响应，并且MobX可以在任何的ES5环境下运行，但是这里列举一个使用ES6的语法去写一个React组件
 
 ```javascript
 import {observer} from 'mobx-react';
