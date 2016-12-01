@@ -33,7 +33,7 @@ person.setAge(21);
 
 在使一个对象可观察时需要注意一些事情：
 
-* 当通过使用`observabel`传递对象时，在使对象变得可观察时，只有当时存在的属性才会被观察。后续在添加到对象中的属性是不会被观察的，除非使用
+* 当通过使用`observable`传递对象时，在使对象变得可观察时，只有当时存在的属性才会被观察。后续在添加到对象中的属性是不会被观察的，除非使用
 [`extendObservable`](extend-observable.md)
 * 只有纯对象才能被观察。对于非纯对象，其构造函数负责初始化其可被观察的属性。使用[`@observable`](observable.md)注释或 [`extendObservable`](extend-observable.md)函数。
 * getters 属性将会自动转换为派生属性，就像[`@computed`](computed-decorator)做的事是一样的。

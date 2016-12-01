@@ -4,12 +4,12 @@
 * `observable(value)`
 * `@observable classProperty = value` 
 
-Observable值可以是JS元类型，引用，普通对象，类实例，数组和 Maps。应用以下转换规则，但是可以通过 *修饰符* 进行微调整。
+Observable值可以是JS原始数据，引用，普通对象，类实例，数组和 Maps。应用以下转换规则，但是可以通过 *修饰符* 进行微调整。
 
 1. 如果 *值* 包含在`asMap` *修饰符* 中：将会返回一个新的[Observable Map](map.md)。如果你不是想对特定的条目更改，而是对条目的添加或删除，Observable maps 是非常有用的。
 1. 如果 *值* 是一个数组，将会返回一个新的[Observable Array](array.md)。
 1. 如果 *值* 是一个 *没有* 原型的对象，它所有当前拥有的属性都将会被观察。具体查看[Observable Object](object.md)
-1. 如果 *值* 是一个 *有* 原型，Javasctipt 元数据或者函数的对象，将会返回一个[Boxed Observable](boxed.md)。MobX不会自动的观察带有原型的对象，因为这是他的构造函数的事情，在构造函数中使用`extendObservable`或者在类定义的时候使用`@observable`替代。
+1. 如果 *值* 是一个 *有* 原型的对象，Javasctipt原始数据或者函数，将会返回一个[Boxed Observable](boxed.md)。MobX不会自动的观察带有原型的对象，因为这是他的构造函数的事情，在构造函数中使用`extendObservable`或者在类定义的时候使用`@observable`替代。
 
 这些规则似乎很复杂，但是在实践中，你会发现使用它们是非常的直观的。
 

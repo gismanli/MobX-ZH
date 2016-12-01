@@ -1,6 +1,6 @@
 # @observer
 
-`observer`方法\/装饰器可以用于将ReactJS组件转换为响应式组件。它将组件中的`render`函数包在`mobx.autorun`中以确保组件渲染期间使用的任何数据变化时强制重新渲染。它通过单独的`mobx-react`包提供。
+`observer`方法/装饰器可以用于将ReactJS组件转换为响应式组件。它将组件中的`render`函数包在`mobx.autorun`中以确保组件渲染期间使用的任何数据变化时强制重新渲染。它通过单独的`mobx-react`包提供。
 
 ```javascript
 import {observer} from "mobx-react";
@@ -22,19 +22,19 @@ setInterval(() => {
 React.render(<Timer timerData={timerData} />, document.body);
 ```
 
-提示：当`obserer`需要和其它装饰器或者高阶组件组合时，确保`observer`是最内层\ （首次应用\）的装饰器，否则它可能什么事情都不会做。
+提示：当`obserer`需要和其它装饰器或者高阶组件组合时，确保`observer`是最内层（首次应用）的装饰器，否则它可能什么事情都不会做。
 
 注意，使用`@observer`装饰器是可选的，和`observer(class Timer ... { })`实现是完全相同的。
 
 ## 疑难杂症: 间接引用你组件 _中_ 的值
 
-MobX可以做很多事，但是它不能使元数据可观察（虽然可以把它们包含在一个对象中，见[boxed observables](boxed.md)）。所以它观察的不是对象中的 _值_，而是 _属性_。这意味着`observer`实际上反应了你间接引用一个值的事实。所以我们在上面的例子中，如果我们如下初始化，则`Timer`组件**不会**做出响应。
+MobX可以做很多事，但是它不能使原始数据可观察（虽然可以把它们包含在一个对象中，见[boxed observables](boxed.md)）。所以它观察的不是对象中的 _值_，而是 _属性_。这意味着`observer`实际上反应了你间接引用一个值的事实。所以我们在上面的例子中，如果我们如下初始化，则`Timer`组件**不会**做出响应。
 
 ```javascript
 React.render(<Timer timerData={timerData.secondsPassed} />, document.body)
 ```
 
-在这段代码里，我们只是吧`secondsPassed`的当前值传递给`Timer`，这是不可变得值`0`(JS中所有的元数据都是不可变的）。这个数字在将来不会再发生改变，所以`Timer`将永远不会更新。属性`secondsPassed`将来会发生改变，所以我们需要在组件 _中_ 访问它。换句话说：值需要通过_引用_传递而非值。 
+在这段代码里，我们只是吧`secondsPassed`的当前值传递给`Timer`，这是不可变得值`0`(JS中所有的原始数据都是不可变的）。这个数字在将来不会再发生改变，所以`Timer`将永远不会更新。属性`secondsPassed`将来会发生改变，所以我们需要在组件 _中_ 访问它。换句话说：值需要通过 _引用_ 传递 而非 _值_ 传递。 
 
 ## ES5 支持
 
