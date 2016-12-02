@@ -772,10 +772,7 @@
                                 
                                 <h1 id="tojs">toJS</h1>
 <p><code>toJS(value, supportCycles = true)</code></p>
-<p>Recursively converts an (observable) object to a javascript <em>structure</em>.
-Supports observable arrays, objects, maps and primitives.
-Computed values and other non-enumerable properties won&apos;t be part of the result.
-Cycles are detected and properly supported by default, but this can be disabled to improve performance.</p>
+<p>&#x9012;&#x5F52;&#x7684;&#x5C06;&#x4E00;&#x4E2A;&#xFF08;&#x53EF;&#x89C2;&#x5BDF;&#x7684;&#xFF09;&#x5BF9;&#x8C61;&#x53D8;&#x6210;javascript<em>&#x7ED3;&#x6784;</em>&#x3002;&#x652F;&#x6301;&#x53EF;&#x89C2;&#x5BDF;&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x5BF9;&#x8C61;&#xFF0C;maps&#x548C;&#x539F;&#x59CB;&#x7C7B;&#x578B;&#x3002;&#x8BA1;&#x7B97;&#x503C;&#x548C;&#x5176;&#x5B83;&#x4E0D;&#x53EF;&#x679A;&#x4E3E;&#x7684;&#x5C5E;&#x6027;&#x5C06;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x5728;&#x8F6C;&#x6362;&#x7ED3;&#x679C;&#x4E2D;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5176;&#x53EF;&#x4EE5;&#x68C0;&#x6D4B;&#x5230;&#x5FAA;&#x73AF;&#x5E76;&#x6B63;&#x786E;&#x652F;&#x6301;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x53EF;&#x4EE5;&#x7981;&#x7528;&#x6B64;&#x9009;&#x9879;&#x4EE5;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x3002;</p>
 <p>For more complex (de)serialization scenario&apos;s, one can use <a href="https://github.com/mobxjs/serializr" target="_blank">serializr</a></p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> obj = mobx.observable({
     x: <span class="hljs-number">1</span>
@@ -786,7 +783,7 @@ Cycles are detected and properly supported by default, but this can be disabled 
 <span class="hljs-built_in">console</span>.log(mobx.isObservableObject(obj)); <span class="hljs-comment">// true</span>
 <span class="hljs-built_in">console</span>.log(mobx.isObservableObject(clone)); <span class="hljs-comment">// false</span>
 </code></pre>
-<p>Note: this method was named <code>toJSON</code> before MobX 2.2</p>
+<p>&#x6CE8;&#x610F;: &#x5728; MobX2.2 &#x4E4B;&#x524D;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x53EB;&#x505A;<code>toJSON</code></p>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement('script');hm.src = '//hm.baidu.com/hm.js?0e60686c12d4e8d648511070d598b4e8';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(hm, s);})();</script>
                                 
                                 </section>
@@ -814,7 +811,7 @@ Cycles are detected and properly supported by default, but this can be disabled 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"toJS","level":"1.9.11","depth":2,"next":{"title":"transaction","level":"1.9.12","depth":2,"path":"refguide/transaction.md","ref":"refguide/transaction.md","articles":[]},"previous":{"title":"spy","level":"1.9.10","depth":2,"path":"refguide/spy.md","ref":"refguide/spy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"refguide/tojson.md","mtime":"2016-11-15T06:53:01.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-12-01T09:46:40.135Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"toJS","level":"1.9.11","depth":2,"next":{"title":"transaction","level":"1.9.12","depth":2,"path":"refguide/transaction.md","ref":"refguide/transaction.md","articles":[]},"previous":{"title":"spy","level":"1.9.10","depth":2,"path":"refguide/spy.md","ref":"refguide/spy.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"refguide/tojson.md","mtime":"2016-12-02T05:48:55.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-12-02T08:22:34.575Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
