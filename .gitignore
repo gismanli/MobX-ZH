@@ -17,3 +17,5 @@ _book
 
 # gulp-gh-pages
 .publish
+
+.idea
