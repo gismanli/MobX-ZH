@@ -770,26 +770,26 @@
                             
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="what-does-mobx-react-to">What does MobX react to?</h1>
-<p>MobX usually reacts to exactly the things you expect it to.
-Which means that in 90% of your use cases mobx &quot;just works&quot;.
-However, at some point you will encounter a case where it might not do what you expected.
-At that point it is invaluable to understand how MobX determines what to react to.</p>
+                                <h1 id="mobx-&#x4F55;&#x65F6;&#x624D;&#x4F1A;&#x54CD;&#x5E94;-">MobX &#x4F55;&#x65F6;&#x624D;&#x4F1A;&#x54CD;&#x5E94; ?</h1>
+<p>&#x901A;&#x5E38;MobX&#x4F1A;&#x548C;&#x4F60;&#x9884;&#x671F;&#x60F3;&#x7684;&#x54CD;&#x5E94;&#x662F;&#x4E00;&#x81F4;&#x7684;&#x3002;
+&#x53EF;&#x4EE5;&#x8BF4;90%&#x7684;&#x573A;&#x666F;mobx&#x662F;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x7684;&#x3002;
+&#x7136;&#x800C;, &#x5728;&#x4E00;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x4F60;&#x4F1A;&#x9047;&#x5230;&#x548C;&#x4F60;&#x671F;&#x671B;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x7ED3;&#x679C;&#x3002;
+&#x5728;&#x8FD9;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6DF1;&#x5165;&#x7406;&#x89E3;MobX&#x5982;&#x4F55;&#x786E;&#x5B9A;&#x8981;&#x505A;&#x51FA;&#x54CD;&#x5E94;&#x662F;&#x975E;&#x5E38;&#x503C;&#x5F97;&#x7684;&#x3002;</p>
 <blockquote>
-<p>MobX reacts to any <em>existing</em> <strong>observable</strong> <em>property</em> that is read during the execution of a tracked function.</p>
+<p>&#x5728;&#x8BFB;&#x53D6;&#x4EFB;&#x4F55;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x6267;&#x884C;&#x4E2D;&#x7684; <em>&#x5B58;&#x5728;</em> <strong>observable</strong> <em>&#x5C5E;&#x6027;</em> &#x65F6;, MobX&#x4F1A;&#x505A;&#x51FA;&#x54CD;&#x5E94;&#x3002;</p>
 </blockquote>
 <ul>
 <li><em>&quot;reading&quot;</em> is dereferencing an object&apos;s property, which can be done through &quot;dotting into&quot; it (eg. <code>user.name</code>) or using the bracket notation (eg. <code>user[&apos;name&apos;]</code>).</li>
 <li><em>&quot;trackable functions&quot;</em> are the expression of <code>computed</code>, the <code>render()</code> method of an observer component, and the functions that are passed as the first param to <code>when</code>, <code>reaction</code> and <code>autorun</code>.</li>
 <li><em>&quot;during&quot;</em> means that only those observables that are being read while the function is executing are tracked. It doesn&apos;t matter whether these values are used directly or indirectly by the tracked function.</li>
 </ul>
-<p>In other words, MobX will not react to:</p>
+<p>&#x6362;&#x53E5;&#x8BDD;&#x8BF4;, &#x4E0B;&#x5217;&#x60C5;&#x51B5; MobX &#x662F;&#x4E0D;&#x4F1A;&#x505A;&#x51FA;&#x54CD;&#x5E94;&#x7684;:</p>
 <ul>
-<li>Values that are obtained from observables, but outside a tracked function</li>
-<li>Observables that are read in an asynchronously invoked code block</li>
+<li>&#x4ECE;&#x53EF;&#x89C2;&#x5BDF;&#x503C;&#x4E2D;&#x83B7;&#x5F97;&#x503C;, &#x4F46;&#x662F;&#x662F;&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x7684;&#x5916;&#x5C42;&#x3002;</li>
+<li>&#x5728;&#x5F02;&#x6B65;&#x8C03;&#x7528;&#x7684;&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x8BFB;&#x53D6;&#x53EF;&#x89C2;&#x5BDF;&#x8005;</li>
 </ul>
-<h2 id="mobx-tracks-property-access-not-values">MobX tracks property access, not values</h2>
-<p>To elaborate on the above rules with an example, suppose that you have the following observable data structure (<code>observable</code> applies itself recursively by default, so all fields in this example are observable):</p>
+<h2 id="mobx-&#x8FFD;&#x8E2A;&#x7684;&#x53EA;&#x662F;&#x5C5E;&#x6027;-&#x800C;&#x975E;&#x503C;">MobX &#x8FFD;&#x8E2A;&#x7684;&#x53EA;&#x662F;&#x5C5E;&#x6027;, &#x800C;&#x975E;&#x503C;</h2>
+<p>&#x4E3E;&#x4E86;&#x4F8B;&#x5B50;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x4E0A;&#x8FF0;&#x89C4;&#x5219;, &#x5047;&#x8BBE;&#x4F60;&#x6709;&#x4E0B;&#x9762;&#x7684;observable&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;(<code>observable</code> &#x9ED8;&#x8BA4;&#x81EA;&#x8EAB;&#x9012;&#x5F52;&#x8C03;&#x7528;, &#x56E0;&#x6B64;&#x793A;&#x4F8B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5B57;&#x6BB5;&#x90FD;&#x662F;&#x53EF;&#x89C2;&#x5BDF;&#x7684;):</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">let</span> message = observable({
     title: <span class="hljs-string">&quot;Foo&quot;</span>,
     author: {
@@ -800,19 +800,19 @@ At that point it is invaluable to understand how MobX determines what to react t
     ]
 })
 </code></pre>
-<p>In memory that looks as follows. The green boxes indicate <em>observable</em> properties. Note that the <em>values</em> themselves are not observable!</p>
+<p>&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x770B;&#x8D77;&#x6765;&#x5982;&#x4E0B;&#x3002;&#x7EFF;&#x8272;&#x6846;&#x8868;&#x793A;&#x53EF;&#x89C2;&#x5BDF;&#x7684;&#x6027;&#x8D28;&#x3002;&#x8BF7;&#x6CE8;&#x610F;&#xFF0C;&#x503C;&#x672C;&#x8EAB;&#x662F;&#x4E0D;&#x53EF;&#x89C2;&#x5BDF;&#x7684; &#xFF01;</p>
 <p><img src="../images/observed-refs.png" alt="MobX reacts to changing references"></p>
-<p>Now what MobX basically does is recording which <em>arrows</em> you use in your function. After that, it will re-run whenever one of this <em>arrows</em> changes; when they start to refer to something else.</p>
-<h2 id="examples">Examples</h2>
-<p>Lets show that with a bunch of examples (based on the <code>message</code> variable defined above):</p>
-<h4 id="correct-dereference-inside-the-tracked-function">Correct: dereference inside the tracked function</h4>
+<p>&#x73B0;&#x5728; MobX &#x57FA;&#x672C;&#x4E0A;&#x505A;&#x7684;&#x662F;&#x8BB0;&#x5F55;&#x4F60;&#x5728;&#x4F60;&#x7684;&#x51FD;&#x6570;&#x4E2D;&#x4F7F;&#x7528;&#x7684; <em>&#x7BAD;&#x5934;</em> &#x3002; &#x4E4B;&#x540E;, &#x53EA;&#x8981;&#x5176;&#x4E2D;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x7BAD;&#x5934;&#x6539;&#x53D8;&#xFF08;&#x5F53;&#x5B83;&#x4EEC;&#x5F00;&#x59CB;&#x53D8;&#x6210;&#x522B;&#x7684;&#x4E1C;&#x897F;&#xFF09;, &#x5B83;&#x5C31;&#x4F1A;&#x91CD;&#x65B0;&#x8FD0;&#x884C;&#x3002;</p>
+<h2 id="&#x4F8B;&#x5B50;">&#x4F8B;&#x5B50;</h2>
+<p>&#x8BA9;&#x6211;&#x4EEC;&#x6765;&#x5177;&#x4F53;&#x770B;&#x4E00;&#x4E9B;&#x4F8B;&#x5B50;&#xFF08;&#x57FA;&#x4E8E;&#x4E0A;&#x9762;&#x5B9A;&#x4E49;&#x7684; <code>message</code> &#x53D8;&#x91CF;&#xFF09;:</p>
+<h4 id="&#x6B63;&#x786E;-&#x5728;&#x88AB;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x5F15;&#x7528;">&#x6B63;&#x786E;: &#x5728;&#x88AB;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x5F15;&#x7528;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.title)
 })
 message.title = <span class="hljs-string">&quot;Bar&quot;</span>
 </code></pre>
-<p>This will react as expected, the <code>.title</code> property was dereferenced by the autorun, and changed afterwards, so this change is detected.</p>
-<p>You can verify what MobX will track by calling <code>whyRun()</code> inside the tracked function. In the case of the above function it will output the following:</p>
+<p>&#x8FD9;&#x4F1A;&#x548C;&#x9884;&#x671F;&#x4E00;&#x6837;, &#x5C5E;&#x6027; <code>.title</code> &#x5728; autorun &#x4E2D;&#x88AB;&#x5F15;&#x7528;, &#x5E76;&#x4E14;&#x5728;&#x4E4B;&#x540E;&#x6539;&#x53D8;, &#x6240;&#x4EE5;&#x8FD9;&#x4E2A;&#x6539;&#x53D8;&#x662F;&#x53EF;&#x4EE5;&#x68C0;&#x6D4B;&#x5230;&#x7684;&#x3002;</p>
+<p>&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x8C03;&#x7528; <code>whyRun()</code> &#x53BB;&#x9A8C;&#x8BC1; MobX &#x5C06;&#x8DDF;&#x8E2A;&#x54EA;&#x4E9B;&#x5C5E;&#x6027;&#x3002;&#x5728;&#x4E0A;&#x8FF0;&#x529F;&#x80FD;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5B83;&#x5C06;&#x8F93;&#x51FA;&#x4EE5;&#x4E0B;&#x5185;&#x5BB9;:</p>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.title)
     whyRun()
@@ -824,15 +824,14 @@ WhyRun? reaction <span class="hljs-string">&apos;Autorun@1&apos;</span>:
  * This reaction will re-run <span class="hljs-keyword">if</span> any <span class="hljs-keyword">of</span> the following observables changes:
     ObservableObject@<span class="hljs-number">1.</span>title
 </code></pre>
-<h4 id="incorrect-changing-a-non-observable-reference">Incorrect: changing a non-observable reference</h4>
+<h4 id="&#x9519;&#x8BEF;-&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x975E;-observable-&#x7684;&#x5F15;&#x7528;">&#x9519;&#x8BEF;: &#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x975E; observable &#x7684;&#x5F15;&#x7528;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.title)
 })
 message = observable({ title: <span class="hljs-string">&quot;Bar&quot;</span> })
 </code></pre>
-<p>This will <strong>not</strong> react. <code>message</code> was changed, but <code>message</code> is not an observable, just a variable which <em>refers to</em> an observable,
-but the variable (reference) itself is not observable.</p>
-<h4 id="incorrect-dereference-outside-a-tracked-function">Incorrect: dereference outside a tracked function</h4>
+<p>&#x5B83;&#x5C06; <strong>&#x4E0D;&#x4F1A;</strong> &#x54CD;&#x5E94;&#x3002;<code>message</code> &#x867D;&#x7136;&#x6539;&#x53D8;&#x4E86;, &#x4F46;&#x662F; <code>message</code> &#x5E76;&#x4E0D;&#x662F;&#x53EF;&#x89C2;&#x5BDF;&#x7684;, &#x5176;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x5F15;&#x7528; observable &#x7684;&#x53D8;&#x91CF;&#x3002;</p>
+<h4 id="&#x9519;&#x8BEF;-&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5916;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;">&#x9519;&#x8BEF;: &#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5916;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;</h4>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> title = message.title;
 autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(title)
@@ -841,15 +840,17 @@ message.title = <span class="hljs-string">&quot;Bar&quot;</span>
 </code></pre>
 <p>This will <strong>not</strong> react. <code>message.title</code> was dereferenced outside the <code>autorun</code>, and just contains the value of <code>message.title</code> at the  moment of dereferencing (the string <code>&quot;Foo&quot;</code>).
 <code>title</code> is not an observable so <code>autorun</code> will never react.</p>
-<h4 id="correct-dereference-inside-the-tracked-function">Correct: dereference inside the tracked function</h4>
+<p>&#x5B83;&#x5C06; <strong>&#x4E0D;&#x4F1A;</strong> &#x54CD;&#x5E94;&#x3002;<code>message.title</code> &#x662F;&#x5728; <code>autorun</code> &#x5916;&#x9762;&#x7684;&#x95F4;&#x63A5;&#x5F15;&#x7528;, &#x5728;&#x5F15;&#x7528;&#x7684;&#x65F6;&#x5019; <code>title</code> &#x53D8;&#x91CF;&#x53EA;&#x662F; <code>message.title</code> &#x7684;&#x503C;(&#x5B57;&#x7B26;&#x4E32; <code>Foo</code>)&#x3002;
+<code>title</code> &#x5E76;&#x4E0D;&#x662F; <code>observable</code> &#x7684;&#xFF0C;&#x6240;&#x4EE5; <code>autorun</code> &#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x4F5C;&#x51FA;&#x76F8;&#x5E94;&#x3002;</p>
+<h4 id="&#x6B63;&#x786E;-&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;">&#x6B63;&#x786E;: &#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.author.name)
 })
 message.author.name = <span class="hljs-string">&quot;Sara&quot;</span>;
 message.author = { name: <span class="hljs-string">&quot;John&quot;</span> };
 </code></pre>
-<p>This will react to both changes. Both <code>author</code> and <code>author.name</code> are dotted into, allowing MobX to track these references.</p>
-<h4 id="incorrect-store-a-local-reference-to-an-observable-object-without-tracking">Incorrect: store a local reference to an observable object without tracking</h4>
+<p>&#x8FD9;&#x4E24;&#x4E2A;&#x66F4;&#x6539;&#x90FD;&#x5C06;&#x4F5C;&#x51FA;&#x76F8;&#x5E94;&#x3002; <code>author</code> &#x548C; <code>author.name</code> &#x90FD;&#x662F;&#x901A;&#x8FC7; <code>.</code> &#x8BBF;&#x95EE;&#x7684;&#xFF0C;&#x4F7F;&#x5F97; MobX &#x53EF;&#x4EE5;&#x8DDF;&#x8E2A;&#x8FD9;&#x4E9B;&#x5F15;&#x7528;&#x3002;</p>
+<h4 id="&#x9519;&#x8BEF;-&#x5B58;&#x50A8;-observable-&#x5BF9;&#x8C61;&#x7684;&#x672C;&#x5730;&#x5F15;&#x7528;&#x800C;&#x4E0D;&#x5BF9;&#x5176;&#x8DDF;&#x8E2A;">&#x9519;&#x8BEF;: &#x5B58;&#x50A8; <code>observable</code> &#x5BF9;&#x8C61;&#x7684;&#x672C;&#x5730;&#x5F15;&#x7528;&#x800C;&#x4E0D;&#x5BF9;&#x5176;&#x8DDF;&#x8E2A;</h4>
 <pre><code class="lang-javascript"><span class="hljs-keyword">const</span> author = message.author;
 autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(author.name)
@@ -857,18 +858,18 @@ autorun(() =&gt; {
 message.author.name = <span class="hljs-string">&quot;Sara&quot;</span>;
 message.author = { name: <span class="hljs-string">&quot;John&quot;</span> };
 </code></pre>
-<p>The first change will be picked up, <code>message.author</code> and <code>author</code> are the same object, and the <code>.name</code> property is dereferenced in the autorun.
-However the second change will <strong>not</strong> be picked up, the <code>message.author</code> relation is not tracked by the <code>autorun</code>. Autorun is still using the &quot;old&quot; <code>author</code>.</p>
-<h4 id="correct-access-array-properties-in-tracked-function">Correct: access array properties in tracked function</h4>
+<p>&#x7B2C;&#x4E00;&#x4E2A;&#x66F4;&#x6539;&#x5C06;&#x4F1A;&#x4F5C;&#x51FA;&#x76F8;&#x5E94;&#xFF0C;<code>message.author</code> &#x548C; <code>author</code> &#x662F;&#x540C;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x800C; <code>name</code> &#x5C5E;&#x6027;&#x5728; <code>autorun</code> &#x4E2D;&#x8FDB;&#x884C;&#x7684;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x3002;
+&#x4F46;&#x662F;&#x7B2C;&#x4E8C;&#x4E2A;&#x66F4;&#x6539;&#x5E76;&#x4E0D;&#x4F1A;&#x54CD;&#x5E94;&#xFF0C;<code>message.author</code> &#x7684;&#x5173;&#x7CFB;&#x6CA1;&#x6709;&#x901A;&#x8FC7; <code>autorun</code> &#x8FFD;&#x8E2A;&#x3002;Autorun &#x4ECD;&#x7136;&#x4F7F;&#x7528;&#x7684;&#x662F;&quot;&#x8001;&quot;&#x7684; <code>author</code>&#x3002;</p>
+<h4 id="&#x6B63;&#x786E;-&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x8BBF;&#x95EE;&#x6570;&#x7EC4;&#x5C5E;&#x6027;">&#x6B63;&#x786E;: &#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x8BBF;&#x95EE;&#x6570;&#x7EC4;&#x5C5E;&#x6027;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.likes.length);
 })
 message.likes.push(<span class="hljs-string">&quot;Jennifer&quot;</span>);
 </code></pre>
-<p>This will react as expected. <code>.length</code> counts towards a property.
-Note that this will react to <em>any</em> change in the array.
-Arrays are not tracked per index / property (like observable objects and maps) but as a whole.</p>
-<h4 id="incorrect-access-out-of-bounds-indices-in-tracked-function">Incorrect: access out-of-bounds indices in tracked function</h4>
+<p>&#x5176;&#x4F1A;&#x548C;&#x9884;&#x671F;&#x4E00;&#x6837;&#x3002;<code>.length</code> &#x6307;&#x5411;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;&#x3002;
+&#x6CE8;&#x610F;&#x8FD9;&#x4F1A;&#x5BF9;&#x6570;&#x7EC4;&#x4E2D;&#x7684; <em>&#x4EFB;&#x4F55;</em> &#x66F4;&#x6539;&#x505A;&#x51FA;&#x54CD;&#x5E94;&#x3002;
+&#x6570;&#x7EC4;&#x4E0D;&#x8FFD;&#x8E2A;&#x6BCF;&#x4E2A; &#x7D22;&#x5F15; / &#x5C5E;&#x6027; (&#x5982; observable &#x5BF9;&#x8C61;&#x548C;maps)&#xFF0C;&#x800C;&#x662F;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x6574;&#x4F53;&#x8FFD;&#x8E2A;&#x3002;</p>
+<h4 id="&#x9519;&#x8BEF;-&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x7D22;&#x5F15;&#x8D85;&#x754C;&#x8BBF;&#x95EE;">&#x9519;&#x8BEF;: &#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x7D22;&#x5F15;&#x8D85;&#x754C;&#x8BBF;&#x95EE;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.likes[<span class="hljs-number">0</span>]);
 })
@@ -877,36 +878,39 @@ message.likes.push(<span class="hljs-string">&quot;Jennifer&quot;</span>);
 <p>This will react with the above sample data, array indexers count as property access. But <strong>only</strong> if the provided <code>index &lt; length</code>.
 MobX will not track not-yet-existing indices or object properties (except when using maps).
 So always guard your array index based access with a <code>.length</code> check.</p>
-<h4 id="correct-access-array-functions-in-tracked-function">Correct: access array functions in tracked function</h4>
+<p>&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x6570;&#x636E;&#x662F;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#xFF0C;&#x6570;&#x7EC4;&#x7684;&#x7D22;&#x5F15;&#x8BA1;&#x6570;&#x4F5C;&#x4E3A;&#x5C5E;&#x6027;&#x8BBF;&#x95EE;&#xFF0C;&#x4F46;&#x524D;&#x63D0;&#x6761;&#x4EF6; <code>&#x5FC5;&#x987B;</code> &#x662F;&#x63D0;&#x4F9B;&#x7684; <strong>&#x7D22;&#x5F15;&#x5C0F;&#x4E8E;&#x6570;&#x7EC4;&#x957F;&#x5EA6;</strong>&#x3002;
+MobX &#x4E0D;&#x4F1A;&#x8FFD;&#x8E2A;&#x8FD8;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x7D22;&#x5F15;&#x6216;&#x8005;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;(&#x9664;&#x4F7F;&#x7528; <code>maps</code> &#x5916;)&#x3002;
+&#x6240;&#x4EE5;&#x5EFA;&#x8BAE;&#x603B;&#x662F;&#x4F7F;&#x7528; <code>.length</code> &#x6765;&#x68C0;&#x67E5;&#x4FDD;&#x62A4;&#x57FA;&#x4E8E;&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#x7684;&#x8BBF;&#x95EE;&#x3002;</p>
+<h4 id="&#x6B63;&#x786E;-&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x65B9;&#x6CD5;">&#x6B63;&#x786E;: &#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x5185;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x65B9;&#x6CD5;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.likes.join(<span class="hljs-string">&quot;, &quot;</span>));
 })
 message.likes.push(<span class="hljs-string">&quot;Jennifer&quot;</span>);
 </code></pre>
-<p>This will react as expected. All array functions that do not mutate the array are tracked automatically.</p>
+<p>&#x5176;&#x4F1A;&#x548C;&#x9884;&#x671F;&#x4E00;&#x6837;&#x54CD;&#x5E94;&#x3002;&#x6240;&#x6709;&#x4E0D;&#x4F1A;&#x6539;&#x53D8;&#x6570;&#x7EC4;&#x7684;&#x6570;&#x7EC4;&#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x81EA;&#x52A8;&#x5730;&#x8DDF;&#x8E2A;&#x3002;</p>
 <hr>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.likes.join(<span class="hljs-string">&quot;, &quot;</span>));
 })
 message.likes[<span class="hljs-number">2</span>] = <span class="hljs-string">&quot;Jennifer&quot;</span>;
 </code></pre>
-<p>This will react as expected. All array index assignments are detected, but only if <code>index &lt;= length</code>.</p>
-<h4 id="incorrect-use-an-observable-but-without-accessing-any-of-its-properties">Incorrect: &quot;use&quot; an observable but without accessing any of its properties</h4>
+<p>&#x8FD9;&#x4E5F;&#x4F1A;&#x9884;&#x671F;&#x4E00;&#x6837;&#x54CD;&#x5E94;&#x3002;&#x6240;&#x6709;&#x6570;&#x7EC4;&#x7684;&#x7D22;&#x5F15;&#x5206;&#x914D;&#x90FD;&#x53EF;&#x4EE5;&#x68C0;&#x6D4B;&#x5230;&#xFF0C;&#x4F46; <strong>&#x53EA;&#x6709;</strong> &#x7D22;&#x5F15;&#x5C0F;&#x4E8E;&#x6570;&#x7EC4;&#x957F;&#x5EA6;&#x65F6;&#x3002;</p>
+<h4 id="&#x9519;&#x8BEF;-&#x4F7F;&#x7528;-observable-&#x4F46;&#x6CA1;&#x6709;&#x8BBF;&#x95EE;&#x5B83;&#x7684;&#x4EFB;&#x4F55;&#x5C5E;&#x6027;">&#x9519;&#x8BEF;: &quot;&#x4F7F;&#x7528;&quot; observable &#x4F46;&#x6CA1;&#x6709;&#x8BBF;&#x95EE;&#x5B83;&#x7684;&#x4EFB;&#x4F55;&#x5C5E;&#x6027;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     message.likes;
 })
 message.likes.push(<span class="hljs-string">&quot;Jennifer&quot;</span>);
 </code></pre>
-<p>This will <strong>not</strong> react. Simply because the <code>likes</code> array itself is not being used by the <code>autorun</code>, only the reference to the array.
-So in contrast, <code>messages.likes = [&quot;Jennifer&quot;]</code> would be picked up; that statement does not modify the array, but the <code>likes</code> property itself.</p>
-<h4 id="incorrect-using-non-observable-object-properties">Incorrect: using non-observable object properties</h4>
+<p>&#x8FD9;&#x5C06;&#x4E0D;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;&#x56E0;&#x4E3A; <code>likes</code> &#x6570;&#x7EC4;&#x672C;&#x8EAB;&#x5E76;&#x6CA1;&#x6709;&#x88AB; <code>autorun</code> &#x4F7F;&#x7528;&#xFF0C;&#x53EA;&#x662F;&#x5F15;&#x7528;&#x4E86;&#x6570;&#x7EC4;&#x3002;
+&#x6240;&#x4EE5;&#x76F8;&#x6BD4;&#x4E4B;&#x4E0B;&#xFF0C;<code>messages.likes = [&quot;Jennifer&quot;]</code> &#x662F;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x7684;; &#x58F0;&#x660E;&#x8868;&#x8FBE;&#x5F0F;&#x5E76;&#x6CA1;&#x6709;&#x4FEE;&#x6539;&#x6570;&#x7EC4;&#xFF0C;&#x800C;&#x662F;&#x4FEE;&#x6539;&#x4E86; <code>likes</code> &#x5C5E;&#x6027;&#x672C;&#x8EAB;&#x3002;</p>
+<h4 id="&#x9519;&#x8BEF;-&#x4F7F;&#x7528;&#x975E;-observable-&#x7684;&#x5C5E;&#x6027;">&#x9519;&#x8BEF;: &#x4F7F;&#x7528;&#x975E; observable &#x7684;&#x5C5E;&#x6027;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.postDate)
 })
 message.postDate = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
 </code></pre>
-<p>This will <strong>not</strong> react. MobX can only track observable properties.</p>
-<h4 id="incorrect-using-not-yet-existing-observable-object-properties">Incorrect: using not yet existing observable object properties</h4>
+<p>&#x8FD9;&#x5C06;&#x4E0D;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;MobX &#x53EA;&#x80FD;&#x8FFD;&#x8E2A; observable &#x7684;&#x5C5E;&#x6027;&#x3002;</p>
+<h4 id="&#x9519;&#x8BEF;-&#x4F7F;&#x7528;&#x8FD8;&#x4E0D;&#x5B58;&#x5728;&#x7684;-observable-&#x5BF9;&#x8C61;">&#x9519;&#x8BEF;: &#x4F7F;&#x7528;&#x8FD8;&#x4E0D;&#x5B58;&#x5728;&#x7684; observable &#x5BF9;&#x8C61;</h4>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     <span class="hljs-built_in">console</span>.log(message.postDate)
 })
@@ -916,7 +920,9 @@ extendObservable(message, {
 </code></pre>
 <p>This will <strong>not</strong> react. MobX will not react to observable properties that did not exist when tracking started.
 If the two statements are swapped, or if any other observable causes the <code>autorun</code> to re-run, the <code>autorun</code> will start tracking the <code>postDate</code> as well.</p>
-<h4 id="correct-using-not-yet-existing-map-entries">Correct: using not yet existing map entries</h4>
+<p>&#x5176;&#x4E0D;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;MobX &#x4E0D;&#x4F1A;&#x5BF9;&#x5F53;&#x8FFD;&#x8E2A;&#x5F00;&#x59CB;&#x65F6;&#x8FD8;&#x4E0D;&#x80FD;&#x5B58;&#x5728;&#x7684; observable &#x5C5E;&#x6027;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;
+&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x4EA4;&#x6362;&#x4E0B;&#x987A;&#x5E8F;&#xFF0C;&#x6216;&#x8005;&#x4EFB;&#x4F55;&#x5176;&#x5B83;&#x7684;&#x53EF;&#x89C2;&#x5BDF;&#x5C5E;&#x6027;&#x4F7F; <code>autorun</code> &#x518D;&#x6B21;&#x8FD0;&#x884C;&#x7684;&#x8BDD;&#xFF0C;<code>autorun</code> &#x4E5F;&#x4F1A;&#x5F00;&#x59CB;&#x8FFD;&#x8E2A; <code>postDate</code> &#x5C5E;&#x6027;&#x3002;</p>
+<h4 id="&#x6B63;&#x786E;-&#x4F7F;&#x7528;-map-&#x4E2D;&#x8FD8;&#x4E0D;&#x80FD;&#x5B58;&#x5728;&#x7684;&#x6761;&#x76EE;">&#x6B63;&#x786E;: &#x4F7F;&#x7528; map &#x4E2D;&#x8FD8;&#x4E0D;&#x80FD;&#x5B58;&#x5728;&#x7684;&#x6761;&#x76EE;</h4>
 <pre><code class="lang-javascript"><span class="hljs-keyword">const</span> twitterUrls = observable(asMap({
     <span class="hljs-string">&quot;John&quot;</span>: <span class="hljs-string">&quot;twitter.com/johnny&quot;</span>
 }))
@@ -926,11 +932,11 @@ autorun(() =&gt; {
 })
 twitterUrls.set(<span class="hljs-string">&quot;Sara&quot;</span>, <span class="hljs-string">&quot;twitter.com/horsejs&quot;</span>)
 </code></pre>
-<p>This <strong>will</strong> react. Observable maps support observing entries that may not exist.
-Note that this will initially print <code>undefined</code>.
-You can check for the existence of an entry first by using <code>twitterUrls.has(&quot;Sara&quot;)</code>.
-So for dynamically keyed collections, always use observable maps.</p>
-<h2 id="mobx-only-tracks-synchronously-accessed-data">MobX only tracks synchronously accessed data</h2>
+<p>&#x8FD9;&#x5C06;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;Observable maps &#x652F;&#x6301;&#x89C2;&#x5BDF;&#x8FD8;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x6761;&#x76EE;&#x3002;
+&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x6700;&#x5F00;&#x59CB;&#x4F1A;&#x8F93;&#x51FA; <code>undefined</code>&#x3002;
+&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528; <code>twitterUrls.has(&quot;Sara&quot;)</code> &#x6765;&#x5148;&#x68C0;&#x67E5;&#x8BE5;&#x9879;&#x662F;&#x5426;&#x5B58;&#x5728;&#x3002;
+&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;&#x52A8;&#x6001;&#x952E;&#x5BF9;&#xFF0C;&#x8BF7;&#x603B;&#x662F;&#x4F7F;&#x7528; observable maps&#x3002;</p>
+<h2 id="mobx-&#x53EA;&#x80FD;&#x8DDF;&#x8E2A;&#x540C;&#x6B65;&#x8BBF;&#x95EE;&#x7684;&#x6570;&#x636E;">MobX &#x53EA;&#x80FD;&#x8DDF;&#x8E2A;&#x540C;&#x6B65;&#x8BBF;&#x95EE;&#x7684;&#x6570;&#x636E;</h2>
 <pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">upperCaseAuthorName</span>(<span class="hljs-params">author</span>) </span>{
     <span class="hljs-keyword">const</span> baseName = author.name;
     <span class="hljs-keyword">return</span> baseName.toUpperCase();
@@ -940,9 +946,9 @@ autorun(() =&gt; {
 })
 message.author.name = <span class="hljs-string">&quot;Chesterton&quot;</span>
 </code></pre>
-<p>This will react. Even though <code>author.name</code> is not dereferenced by the thunk passed to <code>autorun</code> itself,
-MobX will still track the dereferencing that happens in <code>upperCaseAuthorName</code>,
-because it happens <em>during</em> the execution of the autorun.</p>
+<p>&#x8FD9;&#x5C06;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;&#x5C3D;&#x7BA1; <code>author.name</code> &#x4E0D;&#x662F;&#x5728; <code>autorun</code> &#x81EA;&#x8EAB;&#x4E2D;&#x8FDB;&#x884C;&#x7684;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x3002;
+MobX &#x4F1A;&#x8DDF;&#x8E2A;&#x53D1;&#x751F;&#x5728; <code>upperCaseAuthorName</code> &#x51FD;&#x6570;&#x91CC;&#x7684;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#xFF0C;
+&#x56E0;&#x4E3A;&#x5B83;&#x662F;&#x5728; autorun <em>&#x6267;&#x884C;</em> &#x671F;&#x95F4;&#x53D1;&#x751F;&#x7684;&#x3002;</p>
 <hr>
 <pre><code class="lang-javascript">autorun(() =&gt; {
     setTimeout(
@@ -952,9 +958,9 @@ because it happens <em>during</em> the execution of the autorun.</p>
 })
 message.likes.push(<span class="hljs-string">&quot;Jennifer&quot;</span>);
 </code></pre>
-<p>This will <strong>not</strong> react, during the execution of the <code>autorun</code> no observables where accessed, only during the <code>setTimeout</code>.
-In general this is quite obvious and rarely causes issues.
-The notable caveat here is passing renderable callbacks to React components, take for example the following example:</p>
+<p>&#x8FD9;&#x5C06;&#x4E0D;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;, &#x5728; <code>autorun</code> &#x6267;&#x884C;&#x671F;&#x95F4;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x8BBF;&#x95EE; &#x53EF;&#x89C2;&#x5BDF;&#x7684;&#x503C;&#xFF0C;&#x5176;&#x53EA;&#x5728; <code>setTimeout</code> &#x6267;&#x884C;&#x671F;&#x95F4;&#x8BBF;&#x95EE;&#x4E86;&#x3002;
+&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x8FD9;&#x662F;&#x76F8;&#x5F53;&#x660E;&#x663E;&#x7684;&#xFF0C;&#x5F88;&#x5C11;&#x4F1A;&#x5BFC;&#x81F4;&#x95EE;&#x9898;&#x3002;
+&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x5C06;&#x53EF;&#x6E32;&#x67D3;&#x7684;&#x56DE;&#x8C03;&#x4F20;&#x9012;&#x7ED9; React &#x7EC4;&#x4EF6;&#xFF0C;&#x4F8B;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x793A;&#x4F8B;:</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">const</span> MyComponent = observer(({ message }) =&gt;
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SomeContainer</span>
         <span class="hljs-attr">title</span> = {() =&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>{message.title}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>}
@@ -963,9 +969,9 @@ The notable caveat here is passing renderable callbacks to React components, tak
 
 message.title = &quot;Bar&quot;
 </span></code></pre>
-<p>At first glance everything might seem ok here, except that the <code>&lt;div&gt;</code> is actually not rendered by <code>MyComponent</code> (which has a tracked rendering), but by <code>SomeContainer</code>.
-So to make sure that the title of <code>SomeContainer</code> correctly reacts to a new <code>message.title</code>, <code>SomeContainer</code> should be an <code>observer</code> as well.
-If <code>SomeContainer</code> comes from an external lib, you can also fix this by wrapping the <code>div</code> in it&apos;s own stateless <code>observer</code> based component, and instantiating that one in the callback:</p>
+<p>&#x4E00;&#x773C;&#x770B;&#x4E0A;&#x53BB;&#x662F;ok&#x7684;&#xFF0C;&#x9664;&#x4E86; <code>&lt;div&gt;</code> &#x5B9E;&#x9645;&#x4E0A;&#x4E0D;&#x662F;&#x7531; <code>MyComponent</code> (&#x6709;&#x8FFD;&#x8E2A;&#x7684;&#x6E32;&#x67D3;) &#x6E32;&#x67D3;&#x7684;&#xFF0C;&#x800C;&#x662F; <code>SomeContainer</code>&#x3002;
+&#x6240;&#x4EE5;&#x8981;&#x786E;&#x4FDD; <code>SomeContainer</code> &#x7684; title &#x53EF;&#x4EE5;&#x6B63;&#x786E;&#x5BF9;&#x65B0;&#x7684; <code>message.title</code> &#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#xFF0C;<code>SomeContainer</code> &#x5E94;&#x8BE5;&#x4E5F;&#x662F;&#x4E00;&#x4E2A; <code>observer</code>&#x3002;
+&#x5982;&#x679C; <code>SomeContainer</code> &#x6765;&#x81EA;&#x5916;&#x90E8;&#x5E93;&#xFF0C;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x65E0;&#x72B6;&#x6001; <code>observer</code> &#x7EC4;&#x4EF6;&#x4E2D;&#x5305;&#x88C5; <code>div</code> &#x6765;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5E76;&#x5728;&#x56DE;&#x8C03;&#x4E2D;&#x5B9E;&#x4F8B;&#x5316;:</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">const</span> MyComponent = observer(({ message }) =&gt;
     &lt;SomeContainer
         title = {() =&gt; &lt;TitleRenderer message={message} /&gt;}
@@ -978,8 +984,8 @@ const TitleRenderer = observer(({ message }) =&gt;
 
 message.title = &quot;Bar&quot;
 </code></pre>
-<h2 id="avoid-caching-observables-in-local-fields">Avoid caching observables in local fields</h2>
-<p>A common mistake is to store local variables that dereference observables, and then expect components to react. For example:</p>
+<h2 id="&#x907F;&#x514D;&#x5728;&#x672C;&#x5730;&#x5B57;&#x6BB5;&#x53D8;&#x91CF;&#x4E2D;&#x7F13;&#x5B58;-observables">&#x907F;&#x514D;&#x5728;&#x672C;&#x5730;&#x5B57;&#x6BB5;&#x53D8;&#x91CF;&#x4E2D;&#x7F13;&#x5B58; observables</h2>
+<p>&#x4E00;&#x4E2A;&#x5E38;&#x89C1;&#x7684;&#x9519;&#x8BEF;&#x5C31;&#x662F;&#x628A;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x7684;&#x53EF;&#x89C2;&#x5BDF;&#x53D8;&#x91CF;&#x5B58;&#x50A8;&#x5230;&#x672C;&#x5730;&#x53D8;&#x91CF;&#xFF0C;&#x7136;&#x540E;&#x8BA4;&#x4E3A;&#x7EC4;&#x4EF6;&#x4F1A;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;&#x4E3E;&#x4F8B;&#x6765;&#x8BF4;:</p>
 <pre><code class="lang-javascript">@observer <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">component</span> </span>{
     author;
     <span class="hljs-keyword">constructor</span>(props) {
@@ -992,18 +998,17 @@ message.title = &quot;Bar&quot;
     }
 }
 </code></pre>
-<p>This component will react to changes in the <code>author</code>&apos;s name, but it won&apos;t react to changing the <code>.author</code> of the <code>message</code> itself! Because that dereferencing happened outside <code>render()</code>,
-which is the only tracked function of an <code>observer</code> component.
-Note that even marking the <code>author</code> component field as <code>@observable</code> field does not solve this; that field is still assigned only once.
-This can simply be solved by doing the dereferencing inside <code>render()</code>, or by introducing a computed property on the component instance:</p>
+<p>&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x4F1A;&#x5BF9; <code>author.name</code> &#x7684;&#x53D8;&#x5316;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#xFF0C;&#x4F46;&#x4E0D;&#x4F1A;&#x5BF9; <code>message</code> &#x81EA;&#x8EAB;&#x7684; <code>.author</code> &#x7684;&#x53D8;&#x5316;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#xFF01;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x53D1;&#x751F;&#x5728; <code>render()</code> &#x4E4B;&#x5916;&#xFF0C;<code>render()</code> &#x662F; <code>observer</code> &#x7EC4;&#x4EF6;&#x7684;&#x552F;&#x4E00;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x3002;
+&#x6CE8;&#x610F;&#x4E00;&#x70B9;&#x5373;&#x4FBF;&#x628A;&#x7EC4;&#x4EF6;&#x7684; <code>author</code> &#x5B57;&#x6BB5;&#x6807;&#x8BB0;&#x4E3A; <code>@observable</code> &#x7684;&#x5B57;&#x6BB5;&#x4E5F;&#x4E0D;&#x80FD;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#xFF0C;<code>author</code> &#x4ECD;&#x7136;&#x662F;&#x53EA;&#x5206;&#x914D;&#x4E00;&#x6B21;&#x3002;
+&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5728; <code>render()</code> &#x4E2D;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x6216;&#x8005;&#x5728;&#x7EC4;&#x4EF6;&#x5B9E;&#x4F8B;&#x4E0A;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#x89E3;&#x51B3;:</p>
 <pre><code class="lang-javascript">@observer <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">component</span> </span>{
     @computed get author() {
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.props.message.author
     }
 <span class="hljs-comment">// ...</span>
 </code></pre>
-<h2 id="how-multiple-components-will-render">How multiple components will render</h2>
-<p>Suppose that we use the following components are used to render our above <code>message</code> object.</p>
+<h2 id="&#x591A;&#x7EC4;&#x4EF6;&#x5C06;&#x5982;&#x4F55;&#x6E32;&#x67D3;">&#x591A;&#x7EC4;&#x4EF6;&#x5C06;&#x5982;&#x4F55;&#x6E32;&#x67D3;</h2>
+<p>&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E0B;&#x9762;&#x7684;&#x7EC4;&#x4EF6;&#x6765;&#x6E32;&#x67D3;&#x4E0A;&#x9762;&#x7684; <code>message</code> &#x5BF9;&#x8C61;&#x3002;</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">const</span> Message = observer(({ message }) =&gt;
     &lt;div&gt;
         {message.title}
@@ -1050,14 +1055,14 @@ const Likes = observer(({ likes }) =&gt;
 </tr>
 </tbody>
 </table>
-<p>Notes:</p>
+<p>&#x7F16;&#x6CE8;:</p>
 <ol>
-<li>* If the <code>Author</code> component was invoked like: <code>&lt;Author author={ message.author.name} /&gt;</code>. Then <code>Message</code> would be the dereferencing component and react to changes to <code>message.author.name</code>. Nonetheless <code>&lt;Author&gt;</code> would rerender as well, because it receives a new value. So performance wise it is best to dereference as late as possible.</li>
-<li>** If likes where objects instead of strings, and if they were rendered by their own <code>Like</code> component, the <code>Likes</code> component would not rerender for changes happening inside a specific like.</li>
+<li>* &#x5982;&#x679C; <code>Author</code> &#x7EC4;&#x4EF6;&#x662F;&#x50CF;&#x8FD9;&#x6837;&#x8C03;&#x7528;&#x7684;: <code>&lt;Author author={ message.author.name} /&gt;</code> &#x3002;<code>Message</code> &#x4F1A;&#x662F;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x7684;&#x7EC4;&#x4EF6;&#x5E76;&#x5BF9; <code>message.author.name</code> &#x7684;&#x6539;&#x53D8;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;&#x5C3D;&#x7BA1;&#x5982;&#x6B64;&#xFF0C;<code>&lt;Author&gt;</code> &#x540C;&#x6837;&#x4F1A;&#x91CD;&#x65B0;&#x6E32;&#x67D3;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x63A5;&#x6536;&#x5230;&#x4E86;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x503C;&#x3002;&#x6240;&#x4EE5;&#x4ECE;&#x6027;&#x80FD;&#x4E0A;&#x8003;&#x8651;&#xFF0C;&#x8D8A;&#x665A;&#x8FDB;&#x884C;&#x95F4;&#x63A5;&#x5F15;&#x7528;&#x8D8A;&#x597D;&#x3002;</li>
+<li>** &#x5982;&#x679C; <code>likes</code> &#x6570;&#x7EC4;&#x91CC;&#x9762;&#x7684;&#x662F;&#x5BF9;&#x8C61;&#x800C;&#x4E0D;&#x662F;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5E76;&#x4E14;&#x5B83;&#x4EEC;&#x5728;&#x5B83;&#x4EEC;&#x81EA;&#x5DF1;&#x7684; <code>Like</code> &#x7EC4;&#x4EF6;&#x4E2D;&#x6E32;&#x67D3;&#xFF0C;&#x90A3;&#x4E48;&#x5BF9;&#x4E8E;&#x53D1;&#x751F;&#x5728;&#x67D0;&#x4E2A;&#x5177;&#x4F53;&#x7684; <code>like</code> &#x4E2D;&#x53D1;&#x751F;&#x7684;&#x53D8;&#x5316;&#xFF0C;<code>Likes</code> &#x7EC4;&#x4EF6;&#x5C06;&#x4E0D;&#x4F1A;&#x91CD;&#x65B0;&#x6E32;&#x67D3;.</li>
 </ol>
 <h2 id="tldr">TL;DR</h2>
 <blockquote>
-<p>MobX reacts to any an <em>existing</em> <strong>observable</strong> <em>property</em> that is read during the execution of a tracked function.</p>
+<p>MobX &#x4F1A;&#x5BF9;&#x5728;&#x8DDF;&#x8E2A;&#x51FD;&#x6570;&#x6267;&#x884C;&#x671F;&#x95F4;&#x8BFB;&#x53D6;&#x7684;&#x4EFB;&#x4F55; <em>&#x5305;&#x542B;</em> <strong>observable</strong> &#x7684;&#x5C5E;&#x6027;&#x505A;&#x51FA;&#x54CD;&#x5E94;&#x3002;</p>
 </blockquote>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement('script');hm.src = '//hm.baidu.com/hm.js?0e60686c12d4e8d648511070d598b4e8';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(hm, s);})();</script>
                                 
@@ -1086,7 +1091,7 @@ const Likes = observer(({ likes }) =&gt;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"理解MobX是如何响应的","level":"1.5","depth":1,"next":{"title":"如何（不）使用装饰符","level":"1.6","depth":1,"path":"best/decorators.md","ref":"best/decorators.md","articles":[]},"previous":{"title":"boxed values","level":"1.4.4","depth":2,"path":"refguide/boxed.md","ref":"refguide/boxed.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"best/react.md","mtime":"2016-11-15T05:59:42.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-12-02T08:22:34.575Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"理解MobX是如何响应的","level":"1.5","depth":1,"next":{"title":"如何（不）使用装饰符","level":"1.6","depth":1,"path":"best/decorators.md","ref":"best/decorators.md","articles":[]},"previous":{"title":"boxed values","level":"1.4.4","depth":2,"path":"refguide/boxed.md","ref":"refguide/boxed.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"best/react.md","mtime":"2017-04-08T11:28:52.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-08T11:29:19.496Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
