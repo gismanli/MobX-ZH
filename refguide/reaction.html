@@ -771,22 +771,21 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="reaction">Reaction</h1>
-<p>Usage: <code>reaction(() =&gt; data, data =&gt; { sideEffect }, fireImmediately = false, delay = 0)</code>.</p>
-<p>A variation on <code>autorun</code> that gives more fine grained control on which observables will be tracked.
-It takes two functions, the first one is tracked and returns data that is used as input for the second one, the side effect.
-Unlike <code>autorun</code> the side effect won&apos;t be run directly when created, but only when the data expression returns a new value for the first time.
-Any observables that are accessed while executing the side effect will not be tracked.
-The side effect can be debounced, just like <code>autorunAsync</code>.
-<code>reaction</code> returns a disposer function.
-If a string is passed as first argument to <code>reaction</code>, it will be used as debug name.
-The functions passed to <code>when</code> will receive one argument when invoked, the current reaction, which can be used to dispose the when during execution.</p>
-<p>It is important to notice that the side effect will <em>only</em> react to data that was <em>accessed</em> in the data expression, which might be less then the data that is actually used in the effect.
-Also, the side effect will only be triggered when the data returned by the expression has changed (the <code>asStructure</code> modifier can be used to enforce deep comparison).
-In other words: reaction requires you to produce the things you need in your side effect.</p>
-<p>In the following example both <code>reaction1</code>, <code>reaction2</code> and <code>autorun1</code> will react to the addition, removal or replacement of todo&apos;s in the <code>todos</code> array.
-But only <code>reaction2</code> and <code>autorun</code> will react to the change of a <code>title</code> in one of the todo items, because <code>title</code> is used in the data expression of reaction 2, while it isn&apos;t in the data expression of reaction 1.
-<code>autorun</code> tracks the complete side effect, hence it will always trigger correctly, but is also more suspectible to accidentally accessing unrelevant data.
-See also <a href="../best/react">what will MobX React to?</a>.</p>
+<p>&#x7528;&#x6CD5;: <code>reaction(() =&gt; data, data =&gt; { sideEffect }, fireImmediately = false, delay = 0)</code>.</p>
+<p>&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x63D0;&#x4F9B;&#x4E86;&#x7EC6;&#x7C92;&#x5EA6;&#x63A7;&#x5236;&#x8FFD;&#x8E2A;&#x54EA;&#x4E9B; observables &#x7684; <code>autorun</code> &#x53D8;&#x79CD;&#x3002;
+&#x5B83;&#x63A5;&#x6536;&#x4E24;&#x4E2A;&#x51FD;&#x6570;, &#x7B2C;&#x4E00;&#x4E2A;&#x662F;&#x7528;&#x6765;&#x8FFD;&#x8E2A;&#x5E76;&#x8FD4;&#x56DE;&#x6570;&#x636E;&#x5E76;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E8C;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x8F93;&#x5165;&#x7684;&#x526F;&#x4F5C;&#x7528;&#x3002;
+&#x4E0D;&#x540C;&#x4E8E; <code>autorun</code>, &#x5F53;&#x5176;&#x521B;&#x5EFA;&#x65F6;&#x526F;&#x4F5C;&#x7528;&#x4E0D;&#x4F1A;&#x76F4;&#x63A5;&#x8FD0;&#x884C;&#xFF0C;&#x53EA;&#x6709;&#x5728;&#x6570;&#x636E;&#x8868;&#x8FBE;&#x5F0F;&#x9996;&#x6B21;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x503C;&#x540E;&#x624D;&#x4F1A;&#x8FD0;&#x884C;&#x3002;
+&#x5728;&#x6267;&#x884C;&#x526F;&#x4F5C;&#x7528;&#x65F6;&#x8BBF;&#x95EE;&#x7684;&#x4EFB;&#x4F55; observable &#x90FD;&#x4E0D;&#x4F1A;&#x88AB;&#x8FFD;&#x8E2A;&#x3002;
+&#x8FD9;&#x4E2A;&#x526F;&#x4F5C;&#x7528;&#x662F;&#x53EF;&#x4EE5;&#x53BB;&#x6296;&#x7684;&#xFF0C;&#x5C31;&#x50CF; <code>autorunAsync</code>&#x3002;
+<code>reaction</code> &#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x6E05;&#x7406;&#x4E8B;&#x52A1;&#x51FD;&#x6570;&#x3002;
+&#x5982;&#x679C;&#x4F20;&#x7ED9; <code>reaction</code> &#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x662F;&#x5B57;&#x7B26;&#x4E32;, &#x5B83;&#x5C06;&#x88AB;&#x7528;&#x6765;&#x4F5C;&#x4E3A;&#x8C03;&#x8BD5;&#x540D;&#x79F0;&#x3002;
+&#x4F20;&#x5165; <code>reaction</code> &#x7684;&#x51FD;&#x6570; <code>&#x5F53;</code> &#x8C03;&#x7528;&#x65F6;&#x4F1A;&#x63A5;&#x6536;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5373;&#x5F53;&#x524D;&#x7684; reaction&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5728;&#x6267;&#x884C;&#x671F;&#x95F4;&#x8FDB;&#x884C;&#x6E05;&#x7406;&#x4E8B;&#x52A1;&#x3002;</p>
+<p>&#x503C;&#x5F97;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x526F;&#x4F5C;&#x7528; <em>&#x4EC5;</em> &#x5BF9;&#x6570;&#x636E;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D; <em>&#x8BBF;&#x95EE;</em> &#x7684;&#x6570;&#x636E;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#xFF0C;&#x8FD9;&#x53EF;&#x80FD;&#x4F1A;&#x6BD4;&#x5B9E;&#x9645;&#x5728;&#x6548;&#x679C;&#x51FD;&#x6570;&#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x8981;&#x5C11;&#x3002;
+&#x5F53;&#x7136;, &#x526F;&#x4F5C;&#x7528;&#x53EA;&#x4F1A;&#x5728;&#x8868;&#x8FBE;&#x5F0F;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x53D1;&#x751F;&#x66F4;&#x6539;&#x65F6;&#x89E6;&#x53D1;&#xFF08;&#x4FEE;&#x9970;&#x7B26; <code>asStructure</code> &#x53EF;&#x7528;&#x4E8E;&#x6BD4;&#x8F83;&#x6DF1;&#x7684;&#x6267;&#x884C;&#xFF09;&#x3002;
+&#x6362;&#x53E5;&#x8BDD;&#x8BF4;: <code>reactio</code> &#x9700;&#x8981;&#x4F60;&#x751F;&#x4EA7;&#x526F;&#x4F5C;&#x7528;&#x4E2D;&#x6240;&#x9700;&#x8981;&#x7684;&#x4E1C;&#x897F;&#x3002;</p>
+<p>&#x5728;&#x4E0B;&#x9762;&#x7684;&#x793A;&#x4F8B;&#x4E2D;&#xFF0C;<code>reaction1</code>&#x3001;<code>reaction2</code> &#x548C; <code>autorun1</code> &#x90FD;&#x4F1A;&#x5BF9; <code>todos</code> &#x6570;&#x7EC4;&#x4E2D;&#x7684; <code>todo</code> &#x7684;&#x6DFB;&#x52A0;&#x3001;&#x5220;&#x9664;&#x6216;&#x66FF;&#x6362;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#x3002;
+&#x4F46;&#x53EA;&#x6709; <code>reaction2</code> &#x548C; <code>autorun</code> &#x4F1A;&#x5BF9;&#x67D0;&#x4E2A; <code>todo</code> &#x7684; <code>title</code> &#x53D8;&#x5316;&#x4F5C;&#x51FA;&#x54CD;&#x5E94;&#xFF0C;&#x56E0;&#x4E3A;&#x5728; <code>reaction2</code> &#x7684;&#x6570;&#x636E;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x4F7F;&#x7528;&#x4E86; <code>title</code>&#xFF0C;&#x800C; <code>reaction1</code> &#x7684;&#x6570;&#x636E;&#x8868;&#x8FBE;&#x5F0F;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x3002;
+<code>autorun</code> &#x8FFD;&#x8E2A;&#x5B8C;&#x6574;&#x7684;&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x5C06;&#x59CB;&#x7EC8;&#x6B63;&#x786E;&#x89E6;&#x53D1;&#xFF0C;&#x4F46;&#x4E5F;&#x66F4;&#x5BB9;&#x6613;&#x610F;&#x5916;&#x5730;&#x8BBF;&#x95EE;&#x76F8;&#x5173;&#x6570;&#x636E;&#x3002;&#x66F4;&#x591A;&#x8D44;&#x6599;&#x67E5;&#x770B;: <a href="../best/react">what will MobX React to?</a>.</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">const</span> todos = observable([
     {
         title: <span class="hljs-string">&quot;Make coffee&quot;</span>,
@@ -826,7 +825,7 @@ todos[<span class="hljs-number">0</span>].title = <span class="hljs-string">&quo
 <span class="hljs-comment">// reaction 2: Make tea, find biscuit, explain reactions</span>
 <span class="hljs-comment">// autorun 1: Make tea, find biscuit, explain reactions</span>
 </code></pre>
-<p>Reaction is roughly speaking sugar for: <code>computed(expression).observe(action(sideEffect))</code> or <code>autorun(() =&gt; action(sideEffect)(expression)</code></p>
+<p>Reaction &#x5927;&#x81F4;&#x6765;&#x8BB2;&#x5176;&#x662F; <code>computed(expression).observe(action(sideEffect))</code> &#x6216; <code>autorun(() =&gt; action(sideEffect)(expression)</code> &#x7684;&#x8BED;&#x6CD5;&#x7CD6;&#x3002;</p>
 <script>var _hmt = _hmt || [];(function() {var hm = document.createElement('script');hm.src = '//hm.baidu.com/hm.js?0e60686c12d4e8d648511070d598b4e8';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(hm, s);})();</script>
                                 
                                 </section>
@@ -854,7 +853,7 @@ todos[<span class="hljs-number">0</span>].title = <span class="hljs-string">&quo
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"reaction","level":"1.9.9","depth":2,"next":{"title":"spy","level":"1.9.10","depth":2,"path":"refguide/spy.md","ref":"refguide/spy.md","articles":[]},"previous":{"title":"intercept & observe","level":"1.9.8","depth":2,"path":"refguide/observe.md","ref":"refguide/observe.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"refguide/reaction.md","mtime":"2017-03-10T07:44:48.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-08T11:44:26.968Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"reaction","level":"1.9.9","depth":2,"next":{"title":"spy","level":"1.9.10","depth":2,"path":"refguide/spy.md","ref":"refguide/spy.md","articles":[]},"previous":{"title":"intercept & observe","level":"1.9.8","depth":2,"path":"refguide/observe.md","ref":"refguide/observe.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["ba","-lunr","-search"],"pluginsConfig":{"ba":{"token":"0e60686c12d4e8d648511070d598b4e8"},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"refguide/reaction.md","mtime":"2017-04-09T14:57:24.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-09T15:11:23.959Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
