@@ -1,24 +1,23 @@
 #Reaction
 
-Usage: `reaction(() => data, data => { sideEffect }, fireImmediately = false, delay = 0)`.
+用法: `reaction(() => data, data => { sideEffect }, fireImmediately = false, delay = 0)`.
 
-A variation on `autorun` that gives more fine grained control on which observables will be tracked.
-It takes two functions, the first one is tracked and returns data that is used as input for the second one, the side effect.
-Unlike `autorun` the side effect won't be run directly when created, but only when the data expression returns a new value for the first time.
-Any observables that are accessed while executing the side effect will not be tracked.
-The side effect can be debounced, just like `autorunAsync`.
-`reaction` returns a disposer function.
-If a string is passed as first argument to `reaction`, it will be used as debug name.
-The functions passed to `when` will receive one argument when invoked, the current reaction, which can be used to dispose the when during execution.
+它是一个提供了细粒度控制追踪哪些 observables 的 `autorun` 变种。
+它接收两个函数, 第一个是用来追踪并返回数据并作为第二个方法的输入的副作用。
+不同于 `autorun`, 当其创建时副作用不会直接运行，只有在数据表达式首次返回一个新值后才会运行。
+在执行副作用时访问的任何 observable 都不会被追踪。
+这个副作用是可以去抖的，就像 `autorunAsync`。
+`reaction` 返回一个清理事务函数。
+如果传给 `reaction` 的第一个参数是字符串, 它将被用来作为调试名称。
+传入 `reaction` 的函数 `当` 调用时会接收一个参数，即当前的 reaction，可以用来在执行期间进行清理事务。
 
-It is important to notice that the side effect will *only* react to data that was *accessed* in the data expression, which might be less then the data that is actually used in the effect.
-Also, the side effect will only be triggered when the data returned by the expression has changed (the `asStructure` modifier can be used to enforce deep comparison).
-In other words: reaction requires you to produce the things you need in your side effect.
+值得注意的是副作用 *仅* 对数据表达式中 *访问* 的数据作出响应，这可能会比实际在效果函数使用的数据要少。
+当然, 副作用只会在表达式返回的数据发生更改时触发（修饰符 `asStructure` 可用于比较深的执行）。
+换句话说: `reactio` 需要你生产副作用中所需要的东西。
 
-In the following example both `reaction1`, `reaction2` and `autorun1` will react to the addition, removal or replacement of todo's in the `todos` array.
-But only `reaction2` and `autorun` will react to the change of a `title` in one of the todo items, because `title` is used in the data expression of reaction 2, while it isn't in the data expression of reaction 1.
-`autorun` tracks the complete side effect, hence it will always trigger correctly, but is also more suspectible to accidentally accessing unrelevant data.
-See also [what will MobX React to?](../best/react).
+在下面的示例中，`reaction1`、`reaction2` 和 `autorun1` 都会对 `todos` 数组中的 `todo` 的添加、删除或替换作出响应。
+但只有 `reaction2` 和 `autorun` 会对某个 `todo` 的 `title` 变化作出响应，因为在 `reaction2` 的数据表达式中使用了 `title`，而 `reaction1` 的数据表达式没有使用。
+`autorun` 追踪完整的副作用，因此它将始终正确触发，但也更容易意外地访问相关数据。更多资料查看: [what will MobX React to?](../best/react).
 
 ```javascript
 const todos = observable([
@@ -61,4 +60,4 @@ todos[0].title = "Make tea"
 // autorun 1: Make tea, find biscuit, explain reactions
 ```
 
-Reaction is roughly speaking sugar for: `computed(expression).observe(action(sideEffect))` or `autorun(() => action(sideEffect)(expression)`
+Reaction 大致来讲其是 `computed(expression).observe(action(sideEffect))` 或 `autorun(() => action(sideEffect)(expression)` 的语法糖。

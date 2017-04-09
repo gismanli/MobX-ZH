@@ -2,18 +2,14 @@
 
 ## Atoms
 
-在某些时候，你可能想要更多的数据结构或者其它可以在reactive计算时使用的东西(例如流)。使用类`Atom`实现这些是非常简单的，Atoms可用于通知MobX当某些被观察的数据结构发生
+在某些时候，你可能想要更多的数据结构或者其它可以在 reactive 计算时使用的东西(例如流)。
+使用类 `Atom` 实现这些是非常简单的，Atoms可用于通知 MobX 当某些被观察的数据结构发生变化。
+当数据源被使用或不再使用时，MobX 会通知 atom 。
 
+下面的例子演示了如何创建一个可观察的 `Clock`，它可以用在响应式函数中，并且返回当前时间。
+这个 clock 只有当它被观察了才会运行。
 
-Achieving that is pretty simple by using the `Atom` class.
-Atoms can be used to signal MobX that some observable data source has been observed or changed.
-And MobX will signal the atom whenever it is used or no longer in use.
-
-The following example demonstrates how you can create an observable `Clock`, which can be used in reactive functions,
-and returns the current date-time.
-This clock will only actually tick if it is observed by someone.
-
-The complete API of the `Atom` class is demonstrated by this example.
+此示例演示了 `Atom` 类的完整API。
 
 ```javascript
 import {Atom, autorun} from "mobx";
@@ -86,12 +82,10 @@ disposer();
 
 ## Reactions
 
-`Reaction` allows you to create your own 'auto runner'.
-Reactions track a function and signal when the function should be executed again because one or more dependencies have changed.
+`Reaction` 允许你创建你自己的 'auto runner'。
+当函数应该再次运行时，`Reaction` 会追踪函数和信号，因为一个或多个依赖关系已更改。
 
-
-
-This is how `autorun` is defined using `Reaction`:
+这是 `autorun` 如何使用 `Reaction` 来定义的代码:
 
 ```typescript
 export function autorun(view: Lambda, scope?: any) {

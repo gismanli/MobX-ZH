@@ -89,9 +89,6 @@ autorun(() => {
 message.title = "Bar"
 ```
 
-This will **not** react. `message.title` was dereferenced outside the `autorun`, and just contains the value of `message.title` at the  moment of dereferencing (the string `"Foo"`).
-`title` is not an observable so `autorun` will never react.
-
 它将 **不会** 响应。`message.title` 是在 `autorun` 外面的间接引用, 在引用的时候 `title` 变量只是 `message.title` 的值(字符串 `Foo`)。
 `title` 并不是 `observable` 的，所以 `autorun` 永远不会作出相应。
 
@@ -123,7 +120,6 @@ message.author = { name: "John" };
 
 #### 正确: 在跟踪函数内访问数组属性
 
-
 ```javascript
 autorun(() => {
     console.log(message.likes.length);
@@ -143,10 +139,6 @@ autorun(() => {
 })
 message.likes.push("Jennifer");
 ```
-
-This will react with the above sample data, array indexers count as property access. But **only** if the provided `index < length`.
-MobX will not track not-yet-existing indices or object properties (except when using maps).
-So always guard your array index based access with a `.length` check.
 
 上面的例子数据是会作出响应，数组的索引计数作为属性访问，但前提条件 `必须` 是提供的 **索引小于数组长度**。
 MobX 不会追踪还不存在的索引或者对象属性(除使用 `maps` 外)。
@@ -208,9 +200,6 @@ extendObservable(message, {
     postDate: new Date()
 })
 ```
-
-This will **not** react. MobX will not react to observable properties that did not exist when tracking started.
-If the two statements are swapped, or if any other observable causes the `autorun` to re-run, the `autorun` will start tracking the `postDate` as well.
 
 其不会作出响应。MobX 不会对当追踪开始时还不能存在的 observable 属性作出响应。
 如果两个表达式交换下顺序，或者任何其它的可观察属性使 `autorun` 再次运行的话，`autorun` 也会开始追踪 `postDate` 属性。
