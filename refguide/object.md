@@ -40,3 +40,14 @@ person.setAge(21);
 * _已废弃_ 无参函数也将会自动转换为派生属性，就像[`@computed`](computed-decorator)做的事是一样的。
 * `observable`自动的被递归应用于整个对象结构，在实例化和任何将来会被分配给可观察属性的新值。Observable 不会递归到非纯对象里。
 * 默认情况下，95%的情况都可以运行良好，但是对于哪些属性应该精细化的可观察，请参阅 [modifiers](modifiers.md) 章节。
+
+# `observable.object(props)` & `observable.shallowObject(props)`
+
+`observable(object)` 只是 `observable.object(props)` 的缩写。
+默认情况下所有的属性都会进行 _deep observable_。
+[modifiers](modifier.md) 可以用来覆盖单个属性的此行为。
+`shallowObject(props)` 可以用来让这些属性进行浅观察。也就是说, 对值的引用是 observabled 的, 但是这个值本身不会被自动观察到。
+
+## Name argument
+
+`observable.object` 和 `observable.shallowObject` 都有第二个参数, 这个参数被当做如 `spy` 或者 MobX 开发工具的调试名称。

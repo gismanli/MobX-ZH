@@ -44,3 +44,12 @@ todos.shift();
 * `find(predicate: (item, index, array) => boolean, thisArg?), fromIndex?)` 基本上和ES7的`Array.find`提议相同，除了附加的`fromIndex`。
 * `remove(value)`按值移除数组中的单条条目。如果找到它们并移除时将会返回`true`。
 * `peek()` 返回一个包含所有值的并可以安全的传递给其它库使用的数组，就像`slice()`一样。和`slice`不同，`peek`并不会创建一个新的副本。如果你确定要以只读方式使用数组，你可以在对对性能要求较高的应用中使用它。在性能关键部分，建议也使用可观察的数组。
+
+## `observable.shallowArray(values)`
+
+任何分配给可观察数组的值都将都通过 [`observable`](observable.md) 使其变成客观差的。
+创建一个浅数组可以取消这些行为并按照原样存储。有关此机制的详细信息可参阅 [modifiers](modifiers.md)。
+
+## Name 参数
+
+`observable.array` 和 `observable.shallowArray` 都有第二个参数, 这个参数被当做如 `spy` 或者 MobX 开发工具的调试名称。

@@ -20,3 +20,13 @@
 * `intercept(interceptor)` 注册一个在应用于map中任何改变之前会被触发的拦截器。请参阅[observe & intercept](observe.md)。
 * `observe(listener, fireImmdidately)` 注册一个当map中任何改变时被触发的监听者，类似[Object.observe](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/observe)的发射事件。详情请参阅[observe & intercept](observe.md)。
 * `merge(object | map)` 复制提供的对象中的所有条目到这个map中。
+* `replace(values)` 用提供的值替换map中全部内容, 其可简写为 `.clear().merge(values)`。
+
+## `observable.shallowMap(values)`
+
+任何分配给一个可观察的 map 的值都将默认通过 [`observable`](observable.md) 使其变成可观察的。
+创建一个 浅map 去取消默认行为并按照原样存储。有关此机制的详细信息可参阅 [modifiers](modifiers.md)。
+
+## 名称参数
+
+`observable.map` 和 `observable.shallowMap` 都有第二个参数, 这个参数被当做如 `spy` 或者 MobX 开发工具的调试名称。
